@@ -12,4 +12,5 @@ After consideration I realized it would be trivial to shrink this down to a 20-t
 For example instead of represting the first 3 of the solved cube in 48-tuple format as (0, 1, 2, ...) it can be represented simply as (0, ... ) because 1 and 2 are known by rotating the data in 0. 
 This works because each turn is represented as a permutation of the original cube which preserved the ordering of the pairs. 
 
-Through this process I was able to greatly decreate the amount of data needed to represent the cube. 
+Through this process I was able to greatly decrease the amount of data needed to represent the cube.
+
