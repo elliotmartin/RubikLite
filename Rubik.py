@@ -267,23 +267,3 @@ def test_sexy():
     print(base_cube == cube)
 
 test_sexy()
-print('B = ' + str(B))
-
-print('Bi = ' + str(Bi))
-
-
-print('U = ' + str(U))
-
-print('Ui = ' + str(Ui))
-
-
-print('D = ' + str(D))
-print('Di = ' + str(Di))
-
-
-print('R = ' + str(R))
-print('Ri = ' + str(Ri))
-
-
-print('L = ' + str(L))
-print('Li = ' + str(Li))
