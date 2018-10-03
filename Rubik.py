@@ -143,15 +143,31 @@ ld = gy = 47  # (19th cubie; Back face)
 
 # look at implementations for diff algs
 
+
+'''
+Applies a permutation to a cube
+Input is a permutation, all of which are defined below and a cube which is also just a permutation
+'''
 def perm_apply(perm, cube):
     return (tuple(cube[i] for i in perm))
 
+'''
+Computes the inverse of a permutation
+'''
 def perm_inverse(perm):
     inv_perm = [0]*len(perm)
     for i in range(len(perm)):
         inv_perm[perm[i]] = i
     return tuple(inv_perm)
 
+#I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
+#cu= (0,    1,   2,   3,   4,   5,   6,   7,   8,   9,   10, 11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,  22,  23,  24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
+
+'''
+Definitions for all the moves as permutations. 
+The identity is a do nothing move, everything else permutes correlating to the move. 
+Moves are in standard Rubik's cube notation with no double turns. 
+'''
 I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
 I = (0,    1,   2,   3,   4,   5,   6,   7,   8,   9,   10, 11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,  22,  23,  24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
 
@@ -174,8 +190,6 @@ U = (5, 3, 4, 16, 17, 15, 6, 7, 8, 9, 10, 11, 1, 2, 0, 14, 12, 13, 18, 19, 20, 2
 Ui = perm_inverse(U)
 Ui = (14, 12, 13, 1, 2, 0, 6, 7, 8, 9, 10, 11, 16, 17, 15, 5, 3, 4, 18, 19, 20, 21, 22, 23, 41, 40, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 43, 42, 39, 38, 25, 24, 44, 45, 46, 47)
 
-#I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
-#cu= (0,    1,   2,   3,   4,   5,   6,   7,   8,   9,   10, 11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,  22,  23,  24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
 D = (flu, luf, ufl, fur, urf, rfu, frd, rdf, dfr, bdr, drb, rbd, bul, ulb, lbu, bru, rub, ubr, fdl, dlf, lfd, bld, ldb, dbl, fu, uf, fr, rf, fl, lf, rd, dr, br, rb, bl, lb, ld, dl, bu, ub, ur, ru, ul, lu, db, bd, df, fd)
 D = (0, 1, 2, 3, 4, 5, 9, 10, 11, 21, 22, 23, 12, 13, 14, 15, 16, 17, 6, 7, 8, 18, 19, 20, 24, 25, 26, 27, 28, 29, 45, 44, 32, 33, 34, 35, 47, 46, 38, 39, 40, 41, 42, 43, 37, 36, 31, 30)
 
@@ -195,7 +209,15 @@ L = (13, 14, 12, 3, 4, 5, 2, 0, 1, 9, 10, 11, 20, 18, 19, 15, 16, 17, 7, 8, 6, 2
 Li = perm_inverse(L)
 Li = (7, 8, 6, 3, 4, 5, 20, 18, 19, 9, 10, 11, 2, 0, 1, 15, 16, 17, 13, 14, 12, 21, 22, 23, 24, 25, 26, 27, 44, 45, 28, 29, 34, 35, 46, 47, 36, 37, 32, 33, 40, 41, 30, 31, 42, 43, 38, 39)
 
+
+'''
+Stores all the moves in a tuple (why not as a list?) 
+'''
 moves = (F, Fi, U, Ui, R, Ri, B, Bi, D, Di, L, Li)
+
+'''
+Dictionary of move names so that we can parse strings of moves
+'''
 move_names = {}
 move_names[F] = 'F'
 move_names[Fi] = 'Fi'
@@ -209,3 +231,38 @@ move_names[D] = 'D'
 move_names[Di] = 'Di'
 move_names[L] = 'L'
 move_names[Li] = 'Li'
+
+'''
+Checks if a given permutation is a valid cube
+Algorithm TBD
+Corner parity:
+Sum of corner orientations is always divisible by 3 which means that the sum of all first corners mod 3 must be divisible by 3
+Take each first corner number and mod it by 3 if it's 2 subtract 1 otherwise add the number you get. This number must be divisble by 3
+Edge parity:
+Even number of edges flipped 
+The sum of first edge tuples must be even
+Permutation parity:
+Can only perform an even number of swaps
+Compare each piece to where it is on a solved cube, regardless of orientation. Must be an even number of pieces changed
+'''
+def is_valid(cube):
+    None
+
+'''
+Given a 48 length tuple cube compacts down to 20
+This is trivial
+'''
+#take a 48 cube and compact it to 20
+def compact_cube(cube):
+    None
+
+'''
+Expands a given 20 length tuple cube into a 48 length tuple cube
+This is non-trivial and requires expanding each cubie ex 0 become 0, 1, 2 or 1 because 1, 2, 0
+Pretty sure the numbers always have to stay in order so that's the key - can't have have 0 2 1 only 0 1 2, 1 2 0, 2 0 1
+Edges just expand to include 1 up or down from where they are based on whether they're even or not
+'''
+#takes a 20 lenth cube and expands it to 48
+def expand_cube(cube):
+    None
+
