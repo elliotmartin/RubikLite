@@ -246,7 +246,43 @@ Can only perform an even number of swaps
 Compare each piece to where it is on a solved cube, regardless of orientation. Must be an even number of pieces changed
 '''
 def is_valid(cube):
-    None
+    #sum first of all corners - up to the 24th position in the tuple
+    #we only care about the firsts, so we convert to a compact cube
+    firsts = compact_cube(cube)
+
+    #now we get just the corners and mod by 3
+    corners = [i % 3 for i in firsts[0:7]]
+    #then we sum based on our alg - subtract 1 if it's 2, otherwise add the value
+    corners_sum = 0
+    for _ in corners:
+        if _ == 2:
+            corners_sum += -1
+        else:
+            corners_sum += _
+    #if it's not divisible by 3, then the cube is invalid
+    if(corners_sum % 3) != 0:
+        return False
+
+    #now we look at the edges
+    edges = firsts[8:]
+    #this time we just need to tell if there's an even number of flipped edges.
+    # An edge is flipped if it's odd parity so we just sum them all and check if even
+    edges_sum = sum(edges)
+    #if there's an odd number of flipped edges, then the cube is invalid
+    if (edges_sum % 2) != 0:
+        return False
+
+    #TODO: figure this out
+    #now we compare to the base cube
+    base = compact_cube(I)
+    #and find the number of pieces that have been permuted
+    permuted = 0
+    for _ in len(firsts):
+        if firsts[_] != base[_]:
+            permuted += 1
+
+
+
 
 '''
 Given a 48 length tuple cube compacts down to 20
