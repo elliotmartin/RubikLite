@@ -29,16 +29,13 @@ def test_four():
             print('you really fucked up here')
         print('__________________________________________________________________________________________________________________________________________________________________')
 
-#write a test for all forms of sexy:
+#TODO: write a test for different forms of 6x sexy using all the different sides so that we can have a bit more of an indepth test for each turn
 #RURiUi, LULiUi, FUFiUi, BUBiUi
 #RDRiDi, LDLiDi, FDFiDi, BDBiDi
 
 #See if we can reduce to only 1 of each corner per tuple and 1 edge by checking to see if the other ones rotate all about clockwise.
 #thus if we know 1 we can know the other 3. This could cut down to 20 digits in the tuple instead of 48
 #then cube is represented as 0-23 counting by and 24-47 counting by 2
-
-#see if we can determine validity of a cube by the 1st, 4th, etc number and modding by 3 and every 2nd edge mod 2. Should be a way to do this
-#find a good way to generate random cube states based on the rules we find for validity
 
 def test_sexy():
     base_cube = (

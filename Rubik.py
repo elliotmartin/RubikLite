@@ -1,3 +1,4 @@
+import numpy as np
 """
 We'll call the six sides, as usual:
    Front Back   Up Down   Left Right
@@ -151,6 +152,7 @@ Input is a permutation, all of which are defined below and a cube which is also 
 def perm_apply(perm, cube):
     return (tuple(cube[i] for i in perm))
 
+
 '''
 Computes the inverse of a permutation
 '''
@@ -162,6 +164,7 @@ def perm_inverse(perm):
 
 #I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
 #cu= (0,    1,   2,   3,   4,   5,   6,   7,   8,   9,   10, 11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,  22,  23,  24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
+
 
 '''
 Definitions for all the moves as permutations. 
@@ -244,7 +247,10 @@ The sum of first edge tuples must be even
 Permutation parity:
 Can only perform an even number of swaps
 Compare each piece to where it is on a solved cube, regardless of orientation. Must be an even number of pieces changed
+:param: 48 length cube
+:return: True if it's a valid Rubik's cube, otherwise False
 '''
+#TODO: Test this method.
 def is_valid(cube):
     #sum first of all corners - up to the 24th position in the tuple
     #we only care about the firsts, so we convert to a compact cube
@@ -273,6 +279,7 @@ def is_valid(cube):
         return False
 
     #TODO: figure this out
+    #requires a couple of helper methods. First a cyclic decomposition method, then a method to check the parity of the cycle. Computer cyclic decomp. of corners, edges and compare. If equal return true
     #now we compare to the base cube
     base = compact_cube(I)
     #and find the number of pieces that have been permuted
@@ -282,15 +289,48 @@ def is_valid(cube):
             permuted += 1
 
 
+'''
+Computes the cyclic decomposition of a permutation group
+:param: 48 length cube
+:return: a list of list containing the cyclic decomposition of the cube
+'''
+def cyclic_decomp(cube):
+    perms = perms_only(cube)
+    base = perms_only(I)
+
+    cycles = []
+    a = min(perms)
+    while a != max(perms):
+        cycle = [a]
+
+    #grab the lowest value
+
+    None
+
+
+'''
+grabs every corners position by extracting each corner and edge and ignoring permutation changes
+:param: 48 length cube
+:return: 20 length cube
+'''
+def perms_only(cube):
+    corners = cube[0:24]
+    edges = cube[24:]
+    corner_perms = [i for i in corners if i % 3 == 0]
+    edge_perms = [i for i in edges if i % 2 == 0]
+    return tuple(corner_perms+edge_perms)
 
 
 '''
 Given a 48 length tuple cube compacts down to 20
 This is trivial
+:param: 48 length cube
+:return: 20 length cube
 '''
 #take a 48 cube and compact it to 20
 def compact_cube(cube):
     None
+
 
 '''
 Expands a given 20 length tuple cube into a 48 length tuple cube
@@ -302,3 +342,16 @@ Edges just expand to include 1 up or down from where they are based on whether t
 def expand_cube(cube):
     None
 
+#TODO: Generate random cube states for solution
+'''
+Generates a random, valid cube
+First we need to generate a random sequence of 0-23 for the corners and 24-47 for the edges
+Then we need to randomly increase all the corners by 0, 1, or 2 and all the edges by 0 or 1
+'''
+def generate_cube():
+
+    #generate random permutations of corners and edges
+    #have to regenerate if corners are invalid. do same for edges
+    corners = np.random.choice(24, 24, replace = False)
+    edges = np.random.choice(np.arange(24, 48), 24, replace = False)
+    None

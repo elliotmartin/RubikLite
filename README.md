@@ -12,5 +12,9 @@ After consideration I realized it would be trivial to shrink this down to a 20-t
 For example instead of represting the first 3 of the solved cube in 48-tuple format as (0, 1, 2, ...) it can be represented simply as (0, ... ) because 1 and 2 are known by rotating the data in 0. 
 This works because each turn is represented as a permutation of the original cube which preserved the ordering of the pairs. 
 
-Through this process I was able to greatly decrease the amount of data needed to represent the cube.
+The issue with this is that the cube is no longer considered a group because it is not closed, so this is not as useful of a way of representing the cube, however, there are applications of this shrink such as determining the validity of a cube.
+
+Later goals will include implementing an optimal solver based on various algorithms that have been developed to do so. Hopefully Thistlethwaite's, Kociemba's, and Korf's algorithm can all be implemented and then solutions can be compared between them.
+
+For personal development I will aim to generate random states of the cube, compute the solution using each seperate algorithm, and store this information in a database. Running this for a few days on a RasberryPi should give me enough data to compare the algorithms.
 
