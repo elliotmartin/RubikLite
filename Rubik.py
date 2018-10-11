@@ -329,8 +329,11 @@ This is trivial
 '''
 #take a 48 cube and compact it to 20
 def compact_cube(cube):
-    None
-
+    corners = cube[:24]
+    edges = cube[24:]
+    compact_corners = corners[::3]
+    compact_edges = corners[::2]
+    return tuple(corners) + tuple(edges)
 
 '''
 Expands a given 20 length tuple cube into a 48 length tuple cube
