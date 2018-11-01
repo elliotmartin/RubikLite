@@ -1,56 +1,62 @@
-import Rubik
+from Rubik import *
+import unittest
 
-def test_cube(Move):
-    cube = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
-    perms = [Move]*4
-    for p in perms:
-        cube = Rubik.perm_apply(p,cube)
-    return cube
+class test_cube(unittest.TestCase):
 
-#test if four turns does nothing to the cube and if the identity does nothing
-def test_four():
-    moves = [Rubik.F, Rubik.R, Rubik.U, Rubik.B, Rubik.D, Rubik.L]
+    def test_all_basic_moves(self):
+        self.assertEqual(I, multiple_perm_apply([F] * 4, I))
+        self.assertEqual(I, multiple_perm_apply([R] * 4, I))
+        self.assertEqual(I, multiple_perm_apply([U] * 4, I))
+        self.assertEqual(I, multiple_perm_apply([B] * 4, I))
+        self.assertEqual(I, multiple_perm_apply([D] * 4, I))
+        self.assertEqual(I, multiple_perm_apply([L] * 4, I))
+        self.assertEqual(I, multiple_perm_apply([Fi] * 4, I))
+        self.assertEqual(I, multiple_perm_apply([Ri] * 4, I))
+        self.assertEqual(I, multiple_perm_apply([Ui] * 4, I))
+        self.assertEqual(I, multiple_perm_apply([Bi] * 4, I))
+        self.assertEqual(I, multiple_perm_apply([Di] * 4, I))
+        self.assertEqual(I, multiple_perm_apply([Li] * 4, I))
 
-    base_cube = (
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
-    32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
+    #sexy refers to the alg RUR'U' which is really nice to perform. when done 6 times it acts as the identity.
+    #Testing all cases of this tests all interactions of turns with eachother.
+    def test_R_sexy(self):
+        self.assertEqual(I, multiple_perm_apply([R,U,Ri,Ui]*6, I))
+        self.assertEqual(I, multiple_perm_apply([R,F,Ri,Fi]*6, I))
+        self.assertEqual(I, multiple_perm_apply([R,D,Ri,Di]*6, I))
+        self.assertEqual(I, multiple_perm_apply([R,B,Ri,Bi]*6, I))
 
-    for m in moves:
-        print(base_cube == Rubik.perm_apply(Rubik.I, base_cube))
-        print("Move is: " + Rubik.move_names[m])
-        print(test_cube(m))
-        print(base_cube == test_cube(m))
-        wrong_spots = []
-        for b in base_cube:
-            if base_cube[b] != test_cube(m)[b]:
-                wrong_spots.append(b)
-        print('Wrong spots' + str(wrong_spots))
-        if len(wrong_spots) % 2 != 0:
-            print('you really fucked up here')
-        print('__________________________________________________________________________________________________________________________________________________________________')
+    def test_L_sexy(self):
+        self.assertEqual(I, multiple_perm_apply([L,U,Li,Ui]*6, I))
+        self.assertEqual(I, multiple_perm_apply([L,F,Li,Fi]*6, I))
+        self.assertEqual(I, multiple_perm_apply([L,D,Li,Di]*6, I))
+        self.assertEqual(I, multiple_perm_apply([L,B,Li,Bi]*6, I))
 
-#TODO: write a test for different forms of 6x sexy using all the different sides so that we can have a bit more of an indepth test for each turn
-#RURiUi, LULiUi, FUFiUi, BUBiUi
-#RDRiDi, LDLiDi, FDFiDi, BDBiDi
+    def test_U_sexy(self):
+        self.assertEqual(I, multiple_perm_apply([U,F,Ui,Fi]*6, I))
+        self.assertEqual(I, multiple_perm_apply([U,B,Ui,Bi]*6, I))
+        self.assertEqual(I, multiple_perm_apply([U,R,Ui,Ri]*6, I))
+        self.assertEqual(I, multiple_perm_apply([U,L,Ui,Li]*6, I))
 
-#See if we can reduce to only 1 of each corner per tuple and 1 edge by checking to see if the other ones rotate all about clockwise.
-#thus if we know 1 we can know the other 3. This could cut down to 20 digits in the tuple instead of 48
-#then cube is represented as 0-23 counting by and 24-47 counting by 2
+    def test_D_sexy(self):
+        self.assertEqual(I, multiple_perm_apply([D,F,Di,Fi]*6, I))
+        self.assertEqual(I, multiple_perm_apply([D,B,Di,Bi]*6, I))
+        self.assertEqual(I, multiple_perm_apply([D,R,Di,Ri]*6, I))
+        self.assertEqual(I, multiple_perm_apply([D,L,Di,Li]*6, I))
 
-def test_sexy():
-    base_cube = (
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
-    30, 31,
-    32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
+    def test_F_sexy(self):
+        self.assertEqual(I, multiple_perm_apply([F,U,Fi,Ui]*6, I))
+        self.assertEqual(I, multiple_perm_apply([F,D,Fi,Di]*6, I))
+        self.assertEqual(I, multiple_perm_apply([F,R,Fi,Ri]*6, I))
+        self.assertEqual(I, multiple_perm_apply([F,L,Fi,Li]*6, I))
 
-    cube = (
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-    31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
+    def test_B_sexy(self):
+        self.assertEqual(I, multiple_perm_apply([B,U,Bi,Ui]*6, I))
+        self.assertEqual(I, multiple_perm_apply([B,D,Bi,Di]*6, I))
+        self.assertEqual(I, multiple_perm_apply([B,R,Bi,Ri]*6, I))
+        self.assertEqual(I, multiple_perm_apply([B,L,Bi,Li]*6, I))
 
-    sexy = [Rubik.R, Rubik.U, Rubik.Ri, Rubik.Ui] * 6
-    for s in sexy:
-        cube = Rubik.perm_apply(s, cube)
-    print(cube)
-    print(base_cube == cube)
 
-test_sexy()
+if __name__ == '__main__':
+    unittest.main()
+
+

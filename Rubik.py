@@ -162,6 +162,18 @@ def perm_inverse(perm):
         inv_perm[perm[i]] = i
     return tuple(inv_perm)
 
+
+'''
+Applies a list of permutations to a cube
+Perms - list of a permutations, cube is a cube
+returns a cube
+'''
+def multiple_perm_apply(perms, cube):
+    cube = cube
+    for p in perms:
+        cube = perm_apply(p, cube)
+    return cube
+
 #I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
 #cu= (0,    1,   2,   3,   4,   5,   6,   7,   8,   9,   10, 11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,  22,  23,  24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
 
@@ -205,13 +217,13 @@ R = (0, 1, 2, 11, 9, 10, 6, 7, 8, 22, 23, 21, 12, 13, 14, 4, 5, 3, 18, 19, 20, 1
 
 Ri = perm_inverse(R)
 Ri = (0, 1, 2, 17, 15, 16, 6, 7, 8, 4, 5, 3, 12, 13, 14, 22, 23, 21, 18, 19, 20, 11, 9, 10, 24, 25, 44, 45, 28, 29, 30, 31, 40, 41, 34, 35, 36, 37, 38, 39, 26, 27, 42, 43, 32, 33, 46, 47)
-
-L = (ulb, lbu, bul, fur, urf, rfu, ufl, flu, luf, frd, rdf, dfr, dbl, bld, ldb, bru, rub, ubr, dlf, lfd, fdl, bdr, drb, rbd, fu, uf, fr, rf, fd, df, ul, lu, bu, ub, br, rb, bd, db, dl, ld, ur, ru, dr, rd, fl, lf, bl, lb)
-L = (13, 14, 12, 3, 4, 5, 2, 0, 1, 9, 10, 11, 20, 18, 19, 15, 16, 17, 7, 8, 6, 21, 22, 23, 24, 25, 26, 27, 30, 31, 42, 43, 38, 39, 32, 33, 36, 37, 46, 47, 40, 41, 44, 45, 28, 29, 34, 35)
+     #                              #              #              #                             #                                             #                       #                               #               #
+#I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
+L = (ulb, lbu, bul, fur, urf, rfu, ufl, flu, luf, frd, rdf, dfr, dbl, bld, ldb, bru, rub, ubr, dlf, lfd, fdl, bdr, drb, rbd, fu, uf, fr, rf, dl, ld, fd, df, br, rb, ul, lu, bd, db, bu, ub, ur, ru, fl, lf, dr, rd, bl, lb)
+L = (13, 14, 12, 3, 4, 5, 2, 0, 1, 9, 10, 11, 20, 18, 19, 15, 16, 17, 7, 8, 6, 21, 22, 23, 24, 25, 26, 27, 46, 47, 30, 31, 32, 33, 42, 43, 36, 37, 38, 39, 40, 41, 28, 29, 44, 45, 34, 35)
 
 Li = perm_inverse(L)
-Li = (7, 8, 6, 3, 4, 5, 20, 18, 19, 9, 10, 11, 2, 0, 1, 15, 16, 17, 13, 14, 12, 21, 22, 23, 24, 25, 26, 27, 44, 45, 28, 29, 34, 35, 46, 47, 36, 37, 32, 33, 40, 41, 30, 31, 42, 43, 38, 39)
-
+Li = (7, 8, 6, 3, 4, 5, 20, 18, 19, 9, 10, 11, 2, 0, 1, 15, 16, 17, 13, 14, 12, 21, 22, 23, 24, 25, 26, 27, 42, 43, 30, 31, 32, 33, 46, 47, 36, 37, 38, 39, 40, 41, 34, 35, 44, 45, 28, 29)
 
 '''
 Stores all the moves in a tuple (why not as a list?) 
