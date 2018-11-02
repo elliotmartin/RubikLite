@@ -272,11 +272,11 @@ def is_valid(cube):
     corners = [i % 3 for i in firsts[0:7]]
     #then we sum based on our alg - subtract 1 if it's 2, otherwise add the value
     corners_sum = 0
-    for _ in corners:
-        if _ == 2:
+    for c in corners:
+        if c == 2:
             corners_sum += -1
         else:
-            corners_sum += _
+            corners_sum += c
     #if it's not divisible by 3, then the cube is invalid
     if(corners_sum % 3) != 0:
         return False
@@ -296,8 +296,8 @@ def is_valid(cube):
     base = compact_cube(I)
     #and find the number of pieces that have been permuted
     permuted = 0
-    for _ in len(firsts):
-        if firsts[_] != base[_]:
+    for c in len(firsts):
+        if firsts[c] != base[c]:
             permuted += 1
 
 
@@ -354,8 +354,32 @@ Pretty sure the numbers always have to stay in order so that's the key - can't h
 Edges just expand to include 1 up or down from where they are based on whether they're even or not
 '''
 #takes a 20 lenth cube and expands it to 48
-def expand_cube(cube):
-    None
+flatten = lambda l: [item for sublist in l for item in sublist]
+
+#this doesnt work
+def expand_cube(compact_cube):
+    corners = []
+    compact_corners = compact_cube[:8]
+    edges =[]
+    compact_edges = compact_cube[8:]
+
+    for c in compact_corners:
+        if c % 3 == 0:
+            corners.append([c, c + 1, c+2])
+        if c % 3 == 1:
+            corners.append([c, c+1, c-1])
+        if c % 3 == 2:
+            corners.append([c, c-2, c-1])
+    corners = flatten(corners)
+
+    for e in edges:
+        if e % 2 == 0:
+            edges.append([e, e+1])
+        if e % 2 == 1:
+            edges.append([e, e-1])
+    edges = flatten(edges)
+
+    return corners+edges
 
 #TODO: Generate random cube states for solution
 '''
