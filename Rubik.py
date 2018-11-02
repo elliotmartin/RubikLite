@@ -306,6 +306,7 @@ Computes the cyclic decomposition of a permutation group
 :param: 48 length cube
 :return: a list of list containing the cyclic decomposition of the cube
 '''
+#look into sympy to handle this easily.
 def cyclic_decomp(cube):
     perms = perms_only(cube)
     base = perms_only(I)
