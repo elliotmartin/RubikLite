@@ -57,7 +57,7 @@ class test_cube(unittest.TestCase):
 
     def test_compact_then_flatten(self):
         self.assertEqual(I, expand_cube(compact_cube(I)))
-        self.assertEqual(multiple_perm_apply([R,U,F,B,D,L,R,U,L,B], I), expand_cube(compact_cube(R,U,F,B,D,L,R,U,L,B)))
+        self.assertEqual(multiple_perm_apply([R,U,F,B,D,L,R,U,L,B], I), expand_cube(compact_cube(multiple_perm_apply([R,U,F,B,D,L,R,U,L,B],I))))
 
 if __name__ == '__main__':
     unittest.main()

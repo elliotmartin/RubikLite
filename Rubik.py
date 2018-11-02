@@ -344,8 +344,8 @@ def compact_cube(cube):
     corners = cube[:24]
     edges = cube[24:]
     compact_corners = corners[::3]
-    compact_edges = corners[::2]
-    return tuple(corners) + tuple(edges)
+    compact_edges = edges[::2]
+    return tuple(compact_corners) + tuple(compact_edges)
 
 '''
 Expands a given 20 length tuple cube into a 48 length tuple cube
@@ -354,10 +354,9 @@ Pretty sure the numbers always have to stay in order so that's the key - can't h
 Edges just expand to include 1 up or down from where they are based on whether they're even or not
 '''
 #takes a 20 lenth cube and expands it to 48
-flatten = lambda l: [item for sublist in l for item in sublist]
-
 #this doesnt work
 def expand_cube(compact_cube):
+    flatten = lambda l: [item for sublist in l for item in sublist]
     corners = []
     compact_corners = compact_cube[:8]
     edges =[]
@@ -370,14 +369,14 @@ def expand_cube(compact_cube):
             corners.append([c, c+1, c-1])
         if c % 3 == 2:
             corners.append([c, c-2, c-1])
-    corners = flatten(corners)
+    corners = tuple(flatten(corners))
 
-    for e in edges:
+    for e in compact_edges:
         if e % 2 == 0:
             edges.append([e, e+1])
         if e % 2 == 1:
             edges.append([e, e-1])
-    edges = flatten(edges)
+    edges = tuple(flatten(edges))
 
     return corners+edges
 
