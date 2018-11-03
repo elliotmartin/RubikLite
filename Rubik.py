@@ -1,4 +1,5 @@
 import numpy as np
+from sympy.combinatorics import Permutation
 """
 We'll call the six sides, as usual:
    Front Back   Up Down   Left Right
@@ -247,91 +248,22 @@ move_names[Di] = 'Di'
 move_names[L] = 'L'
 move_names[Li] = 'Li'
 
-'''
-Checks if a given permutation is a valid cube
-Algorithm TBD
-Corner parity:
-Sum of corner orientations is always divisible by 3 which means that the sum of all first corners mod 3 must be divisible by 3
-Take each first corner number and mod it by 3 if it's 2 subtract 1 otherwise add the number you get. This number must be divisble by 3
-Edge parity:
-Even number of edges flipped 
-The sum of first edge tuples must be even
-Permutation parity:
-Can only perform an even number of swaps
-Compare each piece to where it is on a solved cube, regardless of orientation. Must be an even number of pieces changed
-:param: 48 length cube
-:return: True if it's a valid Rubik's cube, otherwise False
-'''
-#TODO: Test this method.
-def is_valid(cube):
-    #sum first of all corners - up to the 24th position in the tuple
-    #we only care about the firsts, so we convert to a compact cube
-    firsts = compact_cube(cube)
-
-    #now we get just the corners and mod by 3
-    corners = [i % 3 for i in firsts[0:7]]
-    #then we sum based on our alg - subtract 1 if it's 2, otherwise add the value
-    corners_sum = 0
-    for c in corners:
-        if c == 2:
-            corners_sum += -1
-        else:
-            corners_sum += c
-    #if it's not divisible by 3, then the cube is invalid
-    if(corners_sum % 3) != 0:
-        return False
-
-    #now we look at the edges
-    edges = firsts[8:]
-    #this time we just need to tell if there's an even number of flipped edges.
-    # An edge is flipped if it's odd parity so we just sum them all and check if even
-    edges_sum = sum(edges)
-    #if there's an odd number of flipped edges, then the cube is invalid
-    if (edges_sum % 2) != 0:
-        return False
-
-    #TODO: figure this out
-    #requires a couple of helper methods. First a cyclic decomposition method, then a method to check the parity of the cycle. Computer cyclic decomp. of corners, edges and compare. If equal return true
-    #now we compare to the base cube
-    base = compact_cube(I)
-    #and find the number of pieces that have been permuted
-    permuted = 0
-    for c in len(firsts):
-        if firsts[c] != base[c]:
-            permuted += 1
-
 
 '''
-Computes the cyclic decomposition of a permutation group
-:param: 48 length cube
-:return: a list of list containing the cyclic decomposition of the cube
-'''
-#look into sympy to handle this easily.
-def cyclic_decomp(cube):
-    perms = perms_only(cube)
-    base = perms_only(I)
-
-    cycles = []
-    a = min(perms)
-    while a != max(perms):
-        cycle = [a]
-
-    #grab the lowest value
-
-    None
-
-
-'''
-grabs every corners position by extracting each corner and edge and ignoring permutation changes
+grabs every corners position by extracting each corner and edge and ignoring orientation changes
 :param: 48 length cube
 :return: 20 length cube
 '''
 def perms_only(cube):
-    corners = cube[0:24]
-    edges = cube[24:]
+    return corner_perms_only(cube[:24]) + edge_perms_only(cube[24:])
+
+def corner_perms_only(corners):
     corner_perms = [i for i in corners if i % 3 == 0]
+    return tuple(corner_perms)
+
+def edge_perms_only(edges):
     edge_perms = [i for i in edges if i % 2 == 0]
-    return tuple(corner_perms+edge_perms)
+    return tuple(edge_perms)
 
 
 '''
@@ -381,11 +313,115 @@ def expand_cube(compact_cube):
 
     return corners+edges
 
+
+'''
+Checks if a given permutation is a valid cube
+Algorithm TBD
+Corner parity:
+Sum of corner orientations is always divisible by 3 which means that the sum of all first corners mod 3 must be divisible by 3
+Take each first corner number and mod it by 3 if it's 2 subtract 1 otherwise add the number you get. This number must be divisble by 3
+Edge parity:
+Even number of edges flipped 
+The sum of first edge tuples must be even
+Permutation parity:
+Can only perform an even number of swaps
+Compare each piece to where it is on a solved cube, regardless of orientation. Must be an even number of pieces changed
+:param: 48 length cube
+:return: True if it's a valid Rubik's cube, otherwise False
+'''
+#looks like edge test is working, the other two are not.
+#TODO: Test this method.
+def is_valid(cube):
+    return check_edge_orientation(cube) & check_corner_orientation(cube) & check_permutation_parity(cube)
+
+def check_corner_orientation(cube):
+    #print(cube)
+    # sum first of all corners - up to the 24th position in the tuple
+    # we only care about the firsts, so we convert to a compact cube
+    firsts = compact_cube(cube)
+    #print(firsts)
+
+    # now we get just the corners and mod by 3
+    #print(firsts[0:8])
+    compact_corners = [i % 3 for i in firsts[0:8]]
+    #print(compact_corners)
+    # then we sum
+    compact_corners_sum = sum(compact_corners)
+    #print(compact_corners_sum)
+    # if it's not divisible by 3, then the cube is invalid
+    if (compact_corners_sum % 3) != 0:
+        return False
+
+    return True
+
+def check_edge_orientation(cube):
+    # we only care about the firsts, so we convert to a compact cube
+    firsts = compact_cube(cube)
+    compact_edges = firsts[8:]
+    # this time we just need to tell if there's an even number of flipped edges.
+    # An edge is flipped if it's odd parity so we just sum them all and check if even
+    compact_edges_sum = sum(compact_edges)
+    # if there's an odd number of flipped edges, then the cube is invalid
+    if (compact_edges_sum % 2) != 0:
+        return False
+
+    return True
+
+def check_permutation_parity(cube):
+    # within sympy we can find the parity of the edges and the parity of the corners. If they are equal return true, otherwise false
+    print('cube:')
+    print(cube)
+    corners = cube[:24]
+    edges = cube[24:]
+    edges = [e - 24 for e in edges]
+    print('corners, edges')
+    print(corners)
+    print(edges)
+
+    corner_perms = corner_perms_only(corners)
+    edge_perms = edge_perms_only(edges)
+
+    print('corner perms, edge perms')
+    print(corner_perms_only(corners))
+    print(edge_perms_only(edges))
+
+    #we need to change our lists that have multiples of 2 or 3s to multiples of 1
+    normalized_corners = [int(c/3) for c in corner_perms]
+    normalized_edges = [int(e/2) for e in edge_perms]
+
+    print('normalized corners, edges')
+    print(normalized_corners)
+    print(normalized_edges)
+
+    corners_perm_parity = Permutation(list(normalized_corners)).parity()
+    edges_perm_parity = Permutation(list(normalized_edges)).parity()
+
+    print('sympy perm corners, edges')
+    print(Permutation(list(normalized_corners)))
+    print(Permutation(list(normalized_edges)))
+
+    print('corners, edges perm parity')
+    print(corners_perm_parity)
+    print(edges_perm_parity)
+
+    if corners_perm_parity != edges_perm_parity:
+        return False
+
+    return True
+
+t = multiple_perm_apply([L,R,D,B,R,U,F,R,D], I)
+print(check_corner_orientation(t))
+print(check_edge_orientation(t))
+print(check_permutation_parity(t))
+
+
 #TODO: Generate random cube states for solution
 '''
 Generates a random, valid cube
 First we need to generate a random sequence of 0-23 for the corners and 24-47 for the edges
 Then we need to randomly increase all the corners by 0, 1, or 2 and all the edges by 0 or 1
+:param: None
+:return: A random, valid 3x3 Rubik's cube 
 '''
 def generate_cube():
 
