@@ -16,5 +16,5 @@ The issue with this is that the cube is no longer considered a group because it 
 
 Later goals will include implementing an optimal solver based on various algorithms that have been developed to do so. Hopefully Thistlethwaite's, Kociemba's, and Korf's algorithm can all be implemented and then solutions can be compared between them.
 
-For personal development I will aim to generate random states of the cube, compute the solution using each seperate algorithm, and store this information in a database. Running this for a few days on a RasberryPi should give me enough data to compare the algorithms.
+Eventually I will aim to generate random states of the cube, compute the solution using each seperate algorithm, and store this information in a database. Running this for a few days on a RasberryPi should give me enough data to compare the algorithms.
 
