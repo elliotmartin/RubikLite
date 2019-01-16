@@ -367,52 +367,54 @@ def check_edge_orientation(cube):
 
     return True
 
+#TODO: debug this function.
 def check_permutation_parity(cube):
     # within sympy we can find the parity of the edges and the parity of the corners. If they are equal return true, otherwise false
-    print('cube:')
-    print(cube)
     corners = cube[:24]
     edges = cube[24:]
     edges = [e - 24 for e in edges]
-    print('corners, edges')
-    print(corners)
-    print(edges)
 
     corner_perms = corner_perms_only(corners)
     edge_perms = edge_perms_only(edges)
-
-    print('corner perms, edge perms')
-    print(corner_perms_only(corners))
-    print(edge_perms_only(edges))
 
     #we need to change our lists that have multiples of 2 or 3s to multiples of 1
     normalized_corners = [int(c/3) for c in corner_perms]
     normalized_edges = [int(e/2) for e in edge_perms]
 
-    print('normalized corners, edges')
-    print(normalized_corners)
-    print(normalized_edges)
+    #print('normalized_corners, edges')
+    #print(normalized_corners)
+    #print(normalized_edges)
+
+    sympy_corners = Permutation(list(normalized_corners))
+    sympy_edges = Permutation(list(normalized_edges))
 
     corners_perm_parity = Permutation(list(normalized_corners)).parity()
     edges_perm_parity = Permutation(list(normalized_edges)).parity()
 
-    print('sympy perm corners, edges')
-    print(Permutation(list(normalized_corners)))
-    print(Permutation(list(normalized_edges)))
-
-    print('corners, edges perm parity')
-    print(corners_perm_parity)
-    print(edges_perm_parity)
+    # print('sympy perm corners, edges')
+    # print(sympy_corners)
+    # print(sympy_corners.transpositions())
+    # print(sympy_corners.full_cyclic_form)
+    # print(sympy_edges)
+    # print(sympy_edges.transpositions())
+    # print(sympy_edges.full_cyclic_form)
+    #
+    #
+    # print('corners, edges perm parity')
+    # print(corners_perm_parity)
+    # print(edges_perm_parity)
 
     if corners_perm_parity != edges_perm_parity:
         return False
 
     return True
 
-t = multiple_perm_apply([L,R,D,B,R,U,F,R,D], I)
-print(check_corner_orientation(t))
-print(check_edge_orientation(t))
-print(check_permutation_parity(t))
+#t = multiple_perm_apply([L,R,D,B,R,U,F,R,D], I)
+
+#print('t: ' + str(check_permutation_parity(t)))
+#print('I: ' + str(check_permutation_parity(I)))
+#print('R: ' + str(check_permutation_parity(R)))
+#print('B: ' + str(check_permutation_parity(B)))
 
 
 #TODO: Generate random cube states for solution
