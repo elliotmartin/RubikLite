@@ -342,12 +342,9 @@ def check_corner_orientation(cube):
     #print(firsts)
 
     # now we get just the corners and mod by 3
-    #print(firsts[0:8])
     compact_corners = [i % 3 for i in firsts[0:8]]
-    #print(compact_corners)
     # then we sum
     compact_corners_sum = sum(compact_corners)
-    #print(compact_corners_sum)
     # if it's not divisible by 3, then the cube is invalid
     if (compact_corners_sum % 3) != 0:
         return False
@@ -370,20 +367,30 @@ def check_edge_orientation(cube):
 #TODO: debug this function.
 def check_permutation_parity(cube):
     # within sympy we can find the parity of the edges and the parity of the corners. If they are equal return true, otherwise false
+    print('cube:')
+    print(cube)
+
     corners = cube[:24]
     edges = cube[24:]
     edges = [e - 24 for e in edges]
 
+    print('\ncorners, edges')
+    print(corners)
+    print(edges)
+
     corner_perms = corner_perms_only(corners)
     edge_perms = edge_perms_only(edges)
+    print('\ncorner_perms_only, edges_perms_only')
+    print(corner_perms)
+    print(edge_perms)
 
     #we need to change our lists that have multiples of 2 or 3s to multiples of 1
     normalized_corners = [int(c/3) for c in corner_perms]
     normalized_edges = [int(e/2) for e in edge_perms]
 
-    #print('normalized_corners, edges')
-    #print(normalized_corners)
-    #print(normalized_edges)
+    print('\nnormalized_corners, edges')
+    print(normalized_corners)
+    print(normalized_edges)
 
     sympy_corners = Permutation(list(normalized_corners))
     sympy_edges = Permutation(list(normalized_edges))
@@ -392,29 +399,32 @@ def check_permutation_parity(cube):
     edges_perm_parity = Permutation(list(normalized_edges)).parity()
 
     # print('sympy perm corners, edges')
-    # print(sympy_corners)
-    # print(sympy_corners.transpositions())
-    # print(sympy_corners.full_cyclic_form)
-    # print(sympy_edges)
-    # print(sympy_edges.transpositions())
-    # print(sympy_edges.full_cyclic_form)
+    print('\nsympy corners')
+    print(sympy_corners)
+    print(sympy_corners.transpositions())
+    print(sympy_corners.full_cyclic_form)
+
+    print('\nsympy edges')
+    print(sympy_edges)
+    print(sympy_edges.transpositions())
+    print(sympy_edges.full_cyclic_form)
     #
     #
-    # print('corners, edges perm parity')
-    # print(corners_perm_parity)
-    # print(edges_perm_parity)
+    print(' \ncorners, edges perm parity')
+    print(corners_perm_parity)
+    print(edges_perm_parity)
 
     if corners_perm_parity != edges_perm_parity:
         return False
 
     return True
 
-#t = multiple_perm_apply([L,R,D,B,R,U,F,R,D], I)
+t = multiple_perm_apply([L,R,D,B,R,U,F,R,D], I)
 
 #print('t: ' + str(check_permutation_parity(t)))
 #print('I: ' + str(check_permutation_parity(I)))
 #print('R: ' + str(check_permutation_parity(R)))
-#print('B: ' + str(check_permutation_parity(B)))
+print('B: ' + str(check_permutation_parity(B)))
 
 
 #TODO: Generate random cube states for solution

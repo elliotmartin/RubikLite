@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../MusicCube/.idea/MusicCube.iml" filepath="$PROJECT_DIR$/../MusicCube/.idea/MusicCube.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/RubikLite.iml" filepath="$PROJECT_DIR$/.idea/RubikLite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../bifdiagram/.idea/bifdiagram.iml" filepath="$PROJECT_DIR$/../bifdiagram/.idea/bifdiagram.iml" />
     </modules>
   </component>
 </project>
