@@ -408,8 +408,7 @@ def check_permutation_parity(cube):
     print(sympy_edges)
     print(sympy_edges.transpositions())
     print(sympy_edges.full_cyclic_form)
-    #
-    #
+
     print(' \ncorners, edges perm parity')
     print(corners_perm_parity)
     print(edges_perm_parity)
