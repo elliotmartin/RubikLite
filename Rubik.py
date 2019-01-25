@@ -364,65 +364,60 @@ def check_edge_orientation(cube):
 
     return True
 
+def cyclic_decomp(perm):
+    remain = set(perm)
+    result = []
+    while len(remain) > 0:
+        n = remain.pop()
+        cycle = [n]
+        while True:
+            n = perm[n]
+            if n not in remain:
+                break
+            remain.remove(n)
+            cycle.append(n)
+        result.append(cycle)
+
+    print(result)
+
+    return [i for i in result if len(i) > 1]
+
 #TODO: debug this function.
 def check_permutation_parity(cube):
     # within sympy we can find the parity of the edges and the parity of the corners. If they are equal return true, otherwise false
-    print('cube:')
-    print(cube)
-
     corners = cube[:24]
     edges = cube[24:]
     edges = [e - 24 for e in edges]
 
-    print('\ncorners, edges')
-    print(corners)
-    print(edges)
-
     corner_perms = corner_perms_only(corners)
     edge_perms = edge_perms_only(edges)
-    print('\ncorner_perms_only, edges_perms_only')
-    print(corner_perms)
-    print(edge_perms)
 
     #we need to change our lists that have multiples of 2 or 3s to multiples of 1
     normalized_corners = [int(c/3) for c in corner_perms]
     normalized_edges = [int(e/2) for e in edge_perms]
 
-    print('\nnormalized_corners, edges')
-    print(normalized_corners)
-    print(normalized_edges)
-
-    sympy_corners = Permutation(list(normalized_corners))
-    sympy_edges = Permutation(list(normalized_edges))
-
     corners_perm_parity = Permutation(list(normalized_corners)).parity()
     edges_perm_parity = Permutation(list(normalized_edges)).parity()
-
-    # print('sympy perm corners, edges')
-    print('\nsympy corners')
-    print(sympy_corners)
-    print(sympy_corners.transpositions())
-    print(sympy_corners.full_cyclic_form)
-
-    print('\nsympy edges')
-    print(sympy_edges)
-    print(sympy_edges.transpositions())
-    print(sympy_edges.full_cyclic_form)
-
-    print(' \ncorners, edges perm parity')
-    print(corners_perm_parity)
-    print(edges_perm_parity)
 
     if corners_perm_parity != edges_perm_parity:
         return False
 
     return True
 
-t = multiple_perm_apply([L,R,D,B,R,U,F,R,D], I)
+t = multiple_perm_apply([B, B, B], I)
 
-#print('t: ' + str(check_permutation_parity(t)))
-#print('I: ' + str(check_permutation_parity(I)))
-#print('R: ' + str(check_permutation_parity(R)))
+print('t: ' + str(check_permutation_parity(t)))
+print('I: ' + str(check_permutation_parity(I)))
+print('R: ' + str(check_permutation_parity(R)))
+print('R: ' + str(check_permutation_parity(Ri)))
+print('R: ' + str(check_permutation_parity(L)))
+print('R: ' + str(check_permutation_parity(Li)))
+print('R: ' + str(check_permutation_parity(U)))
+print('R: ' + str(check_permutation_parity(Ui)))
+print('R: ' + str(check_permutation_parity(D)))
+print('R: ' + str(check_permutation_parity(Di)))
+print('R: ' + str(check_permutation_parity(F)))
+print('R: ' + str(check_permutation_parity(Fi)))
 print('B: ' + str(check_permutation_parity(B)))
 
 
