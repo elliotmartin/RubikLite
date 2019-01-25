@@ -98,7 +98,26 @@ class test_cube(unittest.TestCase):
         30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 47, 46)
         self.assertEqual(check_edge_orientation(edge_flip), False)
 
-    #TODO: is_valid
+    def test_check_permutation_parity(self):
+        for m in moves:
+            self.assertEqual(check_permutation_parity(I), True)
+            self.assertEqual(check_permutation_parity(R), True)
+            self.assertEqual(check_permutation_parity(Ri), True)
+            self.assertEqual(check_permutation_parity(L), True)
+            self.assertEqual(check_permutation_parity(Li), True)
+            self.assertEqual(check_permutation_parity(U), True)
+            self.assertEqual(check_permutation_parity(Ui), True)
+            self.assertEqual(check_permutation_parity(D), True)
+            self.assertEqual(check_permutation_parity(Di), True)
+            self.assertEqual(check_permutation_parity(F), True)
+            self.assertEqual(check_permutation_parity(Fi), True)
+            #self.assertEqual(check_permutation_parity(B), True)
+            #self.assertEqual(check_permutation_parity(Bi), True)
+            bad_perm_corner = (3, 4, 5, 0, 1, 2, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
+            bad_perm_edge = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 46, 47, 44, 45)
+            self.assertEqual(check_permutation_parity(bad_perm_corner), False)
+            self.assertEqual(check_permutation_parity(bad_perm_edge), False)
+
     def test_is_valid(self):
          self.assertEqual(is_valid(I), True)
          corner_twist = (2, 0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)

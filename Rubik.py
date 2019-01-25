@@ -378,8 +378,6 @@ def cyclic_decomp(perm):
             cycle.append(n)
         result.append(cycle)
 
-    print(result)
-
     return [i for i in result if len(i) > 1]
 
 #TODO: debug this function.
@@ -404,20 +402,6 @@ def check_permutation_parity(cube):
 
     return True
 
-t = multiple_perm_apply([B, B, B], I)
-
-print('t: ' + str(check_permutation_parity(t)))
-print('I: ' + str(check_permutation_parity(I)))
-print('R: ' + str(check_permutation_parity(R)))
-print('R: ' + str(check_permutation_parity(Ri)))
-print('R: ' + str(check_permutation_parity(L)))
-print('R: ' + str(check_permutation_parity(Li)))
-print('R: ' + str(check_permutation_parity(U)))
-print('R: ' + str(check_permutation_parity(Ui)))
-print('R: ' + str(check_permutation_parity(D)))
-print('R: ' + str(check_permutation_parity(Di)))
-print('R: ' + str(check_permutation_parity(F)))
-print('R: ' + str(check_permutation_parity(Fi)))
 print('B: ' + str(check_permutation_parity(B)))
 
 
