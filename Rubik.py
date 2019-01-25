@@ -193,12 +193,13 @@ F = (6, 7, 8, 0, 1, 2, 9, 10, 11, 3, 4, 5, 12, 13, 14, 15, 16, 17, 18, 19, 20, 2
 
 Fi = perm_inverse(F)
 Fi = (3, 4, 5, 9, 10, 11, 0, 1, 2, 6, 7, 8, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 28, 29, 24, 25, 30, 31, 26, 27, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
-
-B = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr, bld, ldb, dbl, bul, ulb, lbu, bdr, drb, rbd, bru, rub, ubr, fu, uf, fr, rf, fd, df, fl, lf, br, rb, bd, db, bl, lb, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
-B = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 18, 19, 20, 12, 13, 14, 21, 22, 23, 15, 16, 17, 24, 25, 26, 27, 30, 31, 28, 29, 32, 33, 36, 37, 34, 35, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
+                                                                                                                                                            #
+#I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
+B = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr, bld, ldb, dbl, bul, ulb, lbu, bdr, drb, rbd, bru, rub, ubr, fu, uf, fr, rf, fd, df, fl, lf, bu, ub, bd, db, br, rb, bl, lb, ur, ru, ul, lu, dr, rd, dl, ld)
+B = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 18, 19, 20, 12, 13, 14, 21, 22, 23, 15, 16, 17, 24, 25, 26, 27, 30, 31, 28, 29, 38, 39, 36, 37, 32, 33, 34, 35, 40, 41, 42, 43, 44, 45, 46, 47)
 
 Bi = perm_inverse(B)
-Bi = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15, 16, 17, 21, 22, 23, 12, 13, 14, 18, 19, 20, 24, 25, 26, 27, 30, 31, 28, 29, 32, 33, 36, 37, 34, 35, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
+Bi = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15, 16, 17, 21, 22, 23, 12, 13, 14, 18, 19, 20, 24, 25, 26, 27, 30, 31, 28, 29, 36, 37, 38, 39, 34, 35, 32, 33, 40, 41, 42, 43, 44, 45, 46, 47)
 
 U = (rfu, fur, urf, rub, ubr, bru, fdl, dlf, lfd, frd, rdf, dfr, luf, ufl, flu, lbu, bul, ulb, bld, ldb, dbl, bdr, drb, rbd, lu, ul, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, ru, ur, uf, fu, ub, bu, dr, rd, dl, ld)
 U = (5, 3, 4, 16, 17, 15, 6, 7, 8, 9, 10, 11, 1, 2, 0, 14, 12, 13, 18, 19, 20, 21, 22, 23, 43, 42, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 41, 40, 25, 24, 39, 38, 44, 45, 46, 47)
@@ -219,8 +220,7 @@ R = (0, 1, 2, 11, 9, 10, 6, 7, 8, 22, 23, 21, 12, 13, 14, 4, 5, 3, 18, 19, 20, 1
 Ri = perm_inverse(R)
 Ri = (0, 1, 2, 17, 15, 16, 6, 7, 8, 4, 5, 3, 12, 13, 14, 22, 23, 21, 18, 19, 20, 11, 9, 10, 24, 25, 44, 45, 28, 29, 30, 31, 40, 41, 34, 35, 36, 37, 38, 39, 26, 27, 42, 43, 32, 33, 46, 47)
      #                              #              #              #                             #                                             #                       #                               #               #
-#I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
-L = (ulb, lbu, bul, fur, urf, rfu, ufl, flu, luf, frd, rdf, dfr, dbl, bld, ldb, bru, rub, ubr, dlf, lfd, fdl, bdr, drb, rbd, fu, uf, fr, rf, dl, ld, fd, df, br, rb, ul, lu, bd, db, bu, ub, ur, ru, fl, lf, dr, rd, bl, lb)
+#L = (ulb, lbu, bul, fur, urf, rfu, ufl, flu, luf, frd, rdf, dfr, dbl, bld, ldb, bru, rub, ubr, dlf, lfd, fdl, bdr, drb, rbd, fu, uf, fr, rf, dl, ld, fd, df, br, rb, ul, lu, bd, db, bu, ub, ur, ru, fl, lf, dr, rd, bl, lb)
 L = (13, 14, 12, 3, 4, 5, 2, 0, 1, 9, 10, 11, 20, 18, 19, 15, 16, 17, 7, 8, 6, 21, 22, 23, 24, 25, 26, 27, 46, 47, 30, 31, 32, 33, 42, 43, 36, 37, 38, 39, 40, 41, 28, 29, 44, 45, 34, 35)
 
 Li = perm_inverse(L)
