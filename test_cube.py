@@ -3,6 +3,14 @@ import unittest
 
 class test_cube(unittest.TestCase):
 
+    def test_solve(self):
+        scramble = multiple_perm_apply([Ri, Ui, F, Di, L, L, B, B, R, R, B, B, U, F, F, D, U, F, F, R, R, F, D, R, R, B, L, Di, B, B, Ri, Di, F, F, Ri, Ui, F], I)
+        solution = multiple_perm_apply([R, Li, Di, L, Ui, R, R, Di, L, L, Di, L, L, D, F, F, U, U, F, F, L, L, F, R, R], scramble)
+        #print(multiple_perm_apply([Ri, Ui, F, Di, L, L, B, B, R, R, B, B, U, F, F, D, U, F, F, R, R, F, D, R, R, B, L, Di, B, B, Ri, Di, F, F, Ri, Ui, F,
+                                   #R, Li, Di, L, Ui, R, R, Di, L, L, Di, L, L, D, F, F, U, U, F, F, L, L, F, R, R], I))
+        #print(solution)
+        self.assertEqual(I, solution)
+
     def test_all_basic_moves(self):
         self.assertEqual(I, multiple_perm_apply([F] * 4, I))
         self.assertEqual(I, multiple_perm_apply([R] * 4, I))
