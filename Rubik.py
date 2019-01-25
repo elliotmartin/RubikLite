@@ -404,6 +404,9 @@ def check_permutation_parity(cube):
 
 print('B: ' + str(check_permutation_parity(B)))
 
+#R' U' F D' L2 B2 R2 B2 U F2 D U F2 R2 F D R2 B L D' B2 R' D' F2 R' U' F
+#R L' D' L U' R2 D' L2 D' L2 D F2 U2 F2 L2 F R2
+
 
 #TODO: Generate random cube states for solution
 '''
