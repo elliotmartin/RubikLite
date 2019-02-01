@@ -1,66 +1,4 @@
 import numpy as np
-from sympy.combinatorics import Permutation
-"""
-We'll call the six sides, as usual:
-   Front Back   Up Down   Left Right
-or F, B, U, D, L, R.
-
-Permutations:
-
-We'll number the cubie positions starting
-at 0, front to back, up to down, left to right.
-We give an alphabetic name to the cubies as well,
-by listing the faces it contains, starting with
-F or B, in clockwise order (looking in from outside).
-   0th cubie = FLU
-   1st cubie = FUR
-   2nd cubie = FDL
-   3rd cubie = FRD
-   4th cubie = BUL
-   5th cubie = BRU
-   6th cubie = BLD
-   7th cubie = BDR
-Each cubie has three faces, so we have 24 face
-positions.  We'll label them as 0 to 23, but also
-with a 3-letter name that specifies the name
-of the cubie it is on, cyclically rotated to
-put the name of the face first (so cubie FLU
-has faces flu, luf, and ufl, on sides F, L,
-and U, respectively). We'll use lower case
-here for clarity.  Here are the face names,
-written as variables for later convenience.
-We also save each number in a second variable,
-where the positions are replaced by the colors that
-would be there if the cube were solved and had its
-orange-yellow-blue cubie in position 7, with yellow
-facing down.
-"""
-
-"""
-red - Front
-blue - right
-white - up
-orange - Back
-green - Left
-yellow - Down
-Face - Color
-
-F - R
-R - B
-U - W
-B - O
-L - G
-D - Y
-
-FU
-FR
-FL
-FD
-BR
-BL
-BD
-BU
-"""
 
 # flu refers to the front face (because f is first) of the cubie that
 # has a front face, a left face, and an upper face.
@@ -137,160 +75,127 @@ rd = by = 45  # (18th cubie; back face)
 dl = yg = 46  # (19th cubie; back face)
 ld = gy = 47  # (19th cubie; Back face)
 
-# do we keep the edges seperate or meld the entire thing? Really easy to implement
-# if we dont
-# cant see any way in which having edges seperate could be better. Can always take
-# slice of the cube tuple to get just edges or just corners
-# have to copy all perms, including the edges this time
-
-# look at implementations for diff algs
 
 
-'''
-Applies a permutation to a cube
-Input is a permutation, all of which are defined below and a cube which is also just a permutation
-'''
 def perm_apply(perm, cube):
+    """
+    Applies a permutation to a cube
+
+    :param perm: a permutation (0, 1, 2, ... , 47)
+    :param cube: a permutation (0, 1, 2, ... , 47)
+    :return a new permutation with cube permutated according to cube
+    """
     return (tuple(cube[i] for i in perm))
 
 
-'''
-Computes the inverse of a permutation
-'''
+
 def perm_inverse(perm):
+    '''Computes the inverse of a permutation'''
     inv_perm = [0]*len(perm)
     for i in range(len(perm)):
         inv_perm[perm[i]] = i
     return tuple(inv_perm)
 
 
-'''
-Applies a list of permutations to a cube
-Perms - list of a permutations, cube is a cube
-returns a cube
-'''
 def multiple_perm_apply(perms, cube):
+    """
+    Applies a list of permutations to a cube
+
+    :param perms: list of a permutations,
+    :param cube: a cube
+    :return a cube
+    """
     cube = cube
     for p in perms:
         cube = perm_apply(p, cube)
     return cube
 
-#I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
-#cu= (0,    1,   2,   3,   4,   5,   6,   7,   8,   9,   10, 11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,  22,  23,  24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
-
-
-'''
+"""
 Definitions for all the moves as permutations. 
 The identity is a do nothing move, everything else permutes correlating to the move. 
 Moves are in standard Rubik's cube notation with no double turns. 
-'''
-I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
-I = (0,    1,   2,   3,   4,   5,   6,   7,   8,   9,   10, 11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,  22,  23,  24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
+"""
+I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb,
+     rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
 
-#PERMUTATION IS WHERE IT COMES FROM
-#I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
-F =  (fdl, dlf, lfd, flu, luf, ufl, frd, rdf, dfr, fur, urf, rfu, bul, ulb, lbu, bru, rub, ubr, bld, ldb, dbl, bdr, drb, rbd, fl, lf, fu, uf, fd, df, fr, rf, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
-#F = (6, 7, 8, 0, 1, 2, 9, 10, 11, 3, 4, 5, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 26, 27, 30, 31, 24, 25, 28, 29, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
-
+F = (fdl, dlf, lfd, flu, luf, ufl, frd, rdf, dfr, fur, urf, rfu, bul, ulb, lbu, bru, rub, ubr, bld, ldb, dbl, bdr, drb,
+     rbd, fl, lf, fu, uf, fd, df, fr, rf, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
 Fi = perm_inverse(F)
-#Fi = (3, 4, 5, 9, 10, 11, 0, 1, 2, 6, 7, 8, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 28, 29, 24, 25, 30, 31, 26, 27, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
-                                                                                                                                                       #
-B  = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr, bru, rub, ubr, bdr, drb, rbd, bul, ulb, lbu, bld, ldb, dbl, fu, uf, fr, rf, fl, lf, fd, df, bd, db, bu, ub, bl, lb, br, rb, ur, ru, ul, lu, dr, rd, dl, ld)
-#B = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 18, 19, 20, 12, 13, 14, 21, 22, 23, 15, 16, 17, 24, 25, 26, 27, 30, 31, 28, 29, 38, 39, 36, 37, 32, 33, 34, 35, 40, 41, 42, 43, 44, 45, 46, 47)
 
+B = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr, bru, rub, ubr, bdr, drb, rbd, bul, ulb, lbu, bld, ldb,
+     dbl, fu, uf, fr, rf, fl, lf, fd, df, bd, db, bu, ub, bl, lb, br, rb, ur, ru, ul, lu, dr, rd, dl, ld)
 Bi = perm_inverse(B)
-#Bi = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15, 16, 17, 21, 22, 23, 12, 13, 14, 18, 19, 20, 24, 25, 26, 27, 30, 31, 28, 29, 36, 37, 38, 39, 34, 35, 32, 33, 40, 41, 42, 43, 44, 45, 46, 47)
 
-U =  (rfu, fur, urf, rub, ubr, bru, fdl, dlf, lfd, frd, rdf, dfr, luf, ufl, flu, lbu, bul, ulb, bld, ldb, dbl, bdr, drb, rbd, ru, ur, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, lu, ul, ub, bu, uf, fu, dr, rd, dl, ld)
-#U = (5, 3, 4, 16, 17, 15, 6, 7, 8, 9, 10, 11, 1, 2, 0, 14, 12, 13, 18, 19, 20, 21, 22, 23, 43, 42, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 41, 40, 25, 24, 39, 38, 44, 45, 46, 47)
-
+U = (rfu, fur, urf, rub, ubr, bru, fdl, dlf, lfd, frd, rdf, dfr, luf, ufl, flu, lbu, bul, ulb, bld, ldb, dbl, bdr, drb,
+     rbd, ru, ur, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, lu, ul, ub, bu, uf, fu, dr, rd, dl, ld)
 Ui = perm_inverse(U)
-#Ui = (14, 12, 13, 1, 2, 0, 6, 7, 8, 9, 10, 11, 16, 17, 15, 5, 3, 4, 18, 19, 20, 21, 22, 23, 41, 40, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 43, 42, 39, 38, 25, 24, 44, 45, 46, 47)
 
-#I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb ,dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
-D =  (flu, luf, ufl, fur, urf, rfu, ldb, dbl, bld, lfd, fdl, dlf, bul, ulb, lbu, bru, rub, ubr, rbd, bdr, drb, rdf, dfr, frd, fu, uf, fr, rf, fl, lf, ld, dl, br, rb, bl, lb, rd, dr, bu, ub, ur, ru, ul, lu, df, fd, db, bd)
-#D = (0, 1, 2, 3, 4, 5, 9, 10, 11, 21, 22, 23, 12, 13, 14, 15, 16, 17, 6, 7, 8, 18, 19, 20, 24, 25, 26, 27, 28, 29, 45, 44, 32, 33, 34, 35, 47, 46, 38, 39, 40, 41, 42, 43, 37, 36, 31, 30)
-
+D = (flu, luf, ufl, fur, urf, rfu, ldb, dbl, bld, lfd, fdl, dlf, bul, ulb, lbu, bru, rub, ubr, rbd, bdr, drb, rdf, dfr,
+     frd, fu, uf, fr, rf, fl, lf, ld, dl, br, rb, bl, lb, rd, dr, bu, ub, ur, ru, ul, lu, df, fd, db, bd)
 Di = perm_inverse(D)
-#Di = (0, 1, 2, 3, 4, 5, 18, 19, 20, 6, 7, 8, 12, 13, 14, 15, 16, 17, 21, 22, 23, 9, 10, 11, 24, 25, 26, 27, 28, 29, 47, 46, 32, 33, 34, 35, 45, 44, 38, 39, 40, 41, 42, 43, 31, 30, 37, 36)
 
-R =  (flu, luf, ufl, dfr, frd, rdf, fdl, dlf, lfd, drb, rbd, bdr, bul, ulb, lbu, urf, rfu, fur, bld, ldb, dbl, ubr, bru, rub, fu, uf, dr, rd, fl, lf, fd, df, ur, ru, bl, lb, bd, db, bu, ub, fr, rf, ul, lu, br, rb, dl, ld)
-#R = (0, 1, 2, 11, 9, 10, 6, 7, 8, 22, 23, 21, 12, 13, 14, 4, 5, 3, 18, 19, 20, 17, 15, 16, 24, 25, 40, 41, 28, 29, 30, 31, 44, 45, 34, 35, 36, 37, 38, 39, 32, 33, 42, 43, 26, 27, 46, 47)
-
-
+R =  (flu, luf, ufl, dfr, frd, rdf, fdl, dlf, lfd, drb, rbd, bdr, bul, ulb, lbu, urf, rfu, fur, bld, ldb, dbl, ubr, bru,
+      rub, fu, uf, dr, rd, fl, lf, fd, df, ur, ru, bl, lb, bd, db, bu, ub, fr, rf, ul, lu, br, rb, dl, ld)
 Ri = perm_inverse(R)
-#Ri = (0, 1, 2, 17, 15, 16, 6, 7, 8, 4, 5, 3, 12, 13, 14, 22, 23, 21, 18, 19, 20, 11, 9, 10, 24, 25, 44, 45, 28, 29, 30, 31, 40, 41, 34, 35, 36, 37, 38, 39, 26, 27, 42, 43, 32, 33, 46, 47)
 
-#I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, bru ,rub, ubr, bld ,ldb, dbl, bdr, drb, rbd, fu, uf, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
-L  = (ulb, lbu, bul, fur, urf, rfu, ufl, flu, luf, frd, rdf, dfr, dbl, bld, ldb, bru, rub, ubr, dlf, lfd, fdl, bdr, drb, rbd, fu, uf, fr, rf, ul, lu, fd, df, br, rb, dl, ld, bd, db, bu, ub, ur, ru, bl, lb, dr, rd, fl, lf)
-#L = (13, 14, 12, 3, 4, 5, 2, 0, 1, 9, 10, 11, 20, 18, 19, 15, 16, 17, 7, 8, 6, 21, 22, 23, 24, 25, 26, 27, 46, 47, 30, 31, 32, 33, 42, 43, 36, 37, 38, 39, 40, 41, 28, 29, 44, 45, 34, 35)
-
+L = (ulb, lbu, bul, fur, urf, rfu, ufl, flu, luf, frd, rdf, dfr, dbl, bld, ldb, bru, rub, ubr, dlf, lfd, fdl, bdr, drb,
+     rbd, fu, uf, fr, rf, ul, lu, fd, df, br, rb, dl, ld, bd, db, bu, ub, ur, ru, bl, lb, dr, rd, fl, lf)
 Li = perm_inverse(L)
-#Li = (7, 8, 6, 3, 4, 5, 20, 18, 19, 9, 10, 11, 2, 0, 1, 15, 16, 17, 13, 14, 12, 21, 22, 23, 24, 25, 26, 27, 42, 43, 30, 31, 32, 33, 46, 47, 36, 37, 38, 39, 40, 41, 34, 35, 44, 45, 28, 29)
 
-'''
-Stores all the moves in a tuple (why not as a list?) 
-'''
 moves = (F, Fi, U, Ui, R, Ri, B, Bi, D, Di, L, Li)
-
-'''
-Dictionary of move names so that we can parse strings of moves
-'''
-move_names = {}
-move_names[F] = 'F'
-move_names[Fi] = 'Fi'
-move_names[U] = 'U'
-move_names[Ui] = 'Ui'
-move_names[R] = 'R'
-move_names[Ri] = 'Ri'
-move_names[B] = 'B'
-move_names[Bi] = 'Bi'
-move_names[D] = 'D'
-move_names[Di] = 'Di'
-move_names[L] = 'L'
-move_names[Li] = 'Li'
+# Dictionary of move names so that we can parse strings of moves
+move_names = {F: 'F', Fi: 'Fi', U: 'U', Ui: 'Ui', R: 'R', Ri: 'Ri', B: 'B', Bi: 'Bi', D: 'D', Di: 'Di', L: 'L', Li: 'Li'
+              }
 
 
-'''
-grabs every corners position by extracting each corner and edge and ignoring orientation changes
-:param: 48 length cube
-:return: 20 length cube
-'''
 def perms_only(cube):
+    """
+    grabs every corners position by extracting each corner and edge and ignoring orientation changes
+    :param cube: 48 length cube
+    :return 20 length cube
+    """
     return corner_perms_only(cube[:24]) + edge_perms_only(cube[24:])
 
+
 def corner_perms_only(corners):
+    """
+    returns the permutations of each corner
+    :param corners: just the corners of a cube
+    :return the permutation of every corner
+    """
     corner_perms = [i for i in corners if i % 3 == 0]
     return tuple(corner_perms)
 
+
 def edge_perms_only(edges):
+    '''
+    returns the permutations of each edge
+    :param edges: just the edges of a cube
+    :return the permutation of every edge
+    '''
     edge_perms = [i for i in edges if i % 2 == 0]
     return tuple(edge_perms)
 
 
-'''
-Given a 48 length tuple cube compacts down to 20
-This is trivial
-:param: 48 length cube
-:return: 20 length cube
-'''
-#take a 48 cube and compact it to 20
 def compact_cube(cube):
+    """
+    Given a 48 length tuple cube compacts down to 20
+    :param cube: 48 length cube
+    :return: 20 length cube
+    """
     corners = cube[:24]
     edges = cube[24:]
     compact_corners = corners[::3]
     compact_edges = edges[::2]
     return tuple(compact_corners) + tuple(compact_edges)
 
-'''
-Expands a given 20 length tuple cube into a 48 length tuple cube
-This is non-trivial and requires expanding each cubie ex 0 become 0, 1, 2 or 1 because 1, 2, 0
-Pretty sure the numbers always have to stay in order so that's the key - can't have have 0 2 1 only 0 1 2, 1 2 0, 2 0 1
-Edges just expand to include 1 up or down from where they are based on whether they're even or not
-'''
-#takes a 20 lenth cube and expands it to 48
-#this doesnt work
 def expand_cube(compact_cube):
+    """
+    Expands a given 20 length tuple cube into a 48 length tuple cube
+    This is non-trivial and requires expanding each cubie ex 0 become 0, 1, 2 or 1 because 1, 2, 0
+    Pretty sure the numbers always have to stay in order so that's the key - can't have have 0 2 1 only 0 1 2, 1 2 0, 2 0 1
+    Edges just expand to include 1 up or down from where they are based on whether they're even or not
+    """
     flatten = lambda l: [item for sublist in l for item in sublist]
     corners = []
     compact_corners = compact_cube[:8]
@@ -316,44 +221,45 @@ def expand_cube(compact_cube):
     return corners+edges
 
 
-'''
-Checks if a given permutation is a valid cube
-Algorithm TBD
-Corner parity:
-Sum of corner orientations is always divisible by 3 which means that the sum of all first corners mod 3 must be divisible by 3
-Take each first corner number and mod it by 3 if it's 2 subtract 1 otherwise add the number you get. This number must be divisble by 3
-Edge parity:
-Even number of edges flipped 
-The sum of first edge tuples must be even
-Permutation parity:
-Can only perform an even number of swaps
-Compare each piece to where it is on a solved cube, regardless of orientation. Must be an even number of pieces changed
-:param: 48 length cube
-:return: True if it's a valid Rubik's cube, otherwise False
-'''
-#looks like edge test is working, the other two are not.
-#TODO: Test this method.
+
 def is_valid(cube):
+    """
+    Checks if a given permutation is a valid cube
+    :param: 48 length cube
+    :return: True if it's a valid Rubik's cube, otherwise False
+    """
     return check_edge_orientation(cube) & check_corner_orientation(cube) & check_permutation_parity(cube)
 
+
 def check_corner_orientation(cube):
-    #print(cube)
-    # sum first of all corners - up to the 24th position in the tuple
+    """
+    Sum of corner orientations is always divisible by 3. Thus, the sum of all first corners mod 3 must be divisible by 3
+    Take each first corner number and mod it by 3. If the result is 2 subtract 1 otherwise add the number you get.
+    This number must be divisble by 3
+    :param cube:
+    :return boolean:  True if corner orientation is valid, otherwise False
+    """
     # we only care about the firsts, so we convert to a compact cube
     firsts = compact_cube(cube)
-    #print(firsts)
 
     # now we get just the corners and mod by 3
     compact_corners = [i % 3 for i in firsts[0:8]]
-    # then we sum
     compact_corners_sum = sum(compact_corners)
-    # if it's not divisible by 3, then the cube is invalid
+
     if (compact_corners_sum % 3) != 0:
         return False
 
     return True
 
+
 def check_edge_orientation(cube):
+    """
+    Edge parity:
+    Even number of edges flipped
+    The sum of first edge tuples must be even
+    :param cube:
+    :return boolean: True if edge orientation is valid, otherwise False
+    """
     # we only care about the firsts, so we convert to a compact cube
     firsts = compact_cube(cube)
     compact_edges = firsts[8:]
@@ -366,7 +272,14 @@ def check_edge_orientation(cube):
 
     return True
 
+
 def cyclic_decomp(perm):
+    """
+    https://en.wikipedia.org/wiki/Permutation#Cycle_notation
+    https://gist.github.com/begriffs/2211881
+    :param perm:
+    :return list: The cyclic decomposition of the permutation, omitting one cycles
+    """
     remain = set(perm)
     result = []
     while len(remain) > 0:
@@ -382,9 +295,15 @@ def cyclic_decomp(perm):
 
     return [i for i in result if len(i) > 1]
 
-#TODO: debug this function.
+
 def check_permutation_parity(cube):
-    # within sympy we can find the parity of the edges and the parity of the corners. If they are equal return true, otherwise false
+    """
+    Can only perform an even number of swaps
+    Compare each piece to where it is on a solved cube, regardless of orientation.
+    Must be an even number of pieces changed
+    :param cube:
+    :return boolean: True if permutation parity is valid, otherwise False
+    """
     corners = cube[:24]
     edges = cube[24:]
     edges = [e - 24 for e in edges]
@@ -392,46 +311,37 @@ def check_permutation_parity(cube):
     corner_perms = corner_perms_only(corners)
     edge_perms = edge_perms_only(edges)
 
-    #we need to change our lists that have multiples of 2 or 3s to multiples of 1
     normalized_corners = [int(c/3) for c in corner_perms]
     normalized_edges = [int(e/2) for e in edge_perms]
 
-    corners_perm_parity = Permutation(list(normalized_corners)).parity()
-    edges_perm_parity = Permutation(list(normalized_edges)).parity()
+    corners_perm_parity = len(cyclic_decomp(normalized_corners)) % 2
+    edges_perm_parity = len(cyclic_decomp(normalized_edges)) % 2
 
     if corners_perm_parity != edges_perm_parity:
         return False
 
     return True
 
-print('B: ' + str(check_permutation_parity(B)))
-print(I)
-print('\n MOMENT OF TRUTH:')
-print(I)
-print(multiple_perm_apply([R, U, Ri, Ui, Li, U, L, F, Ui, Fi, R, Ui, Ri, Ui, Li, U, U, L, Ui, Li, U, L, Ui, F, R, U, Ri, Ui, Fi, Ui, Li, U, U, L, U, U, Li,
-                           U, L, F, R, U, Ri, Ui, Fi, F, R, U, Ri, Ui, Fi,
-                           Ri, Fi, Li, F, R, Fi, L, F, R, Ui, R, U, R, U, R, Ui, Ri, Ui, R, R, Ui, R, U, Ri,
-                           Ui, Ri, F, R, R, Ui, Ri, Ui, R, U, Ri, Fi, U], I))
 
-
-
-#TODO: Generate random cube states for solution
-'''
-Generates a random, valid cube
-First we need to generate a random sequence of 0-23 for the corners and 24-47 for the edges
-Then we need to randomly increase all the corners by 0, 1, or 2 and all the edges by 0 or 1
-:param: None
-:return: A random, valid 3x3 Rubik's cube 
-'''
 def generate_cube():
-
-    #generate random permutations of corners and edges
-    #have to regenerate if corners are invalid. do same for edges
-    valid = False
-    while valid == False:
-        corners = np.random.choice(24, 24, replace = False)
-        edges = np.random.choice(np.arange(24, 48), 24, replace = False)
-        cube = list(corners) + list(edges)
-        valid = is_valid(cube)
+    """
+    Randomly generates permutations until a valid cube is found
+    :return: A random valid cube
+    """
+    corners = np.random.permutation(np.arange(0, 24))
+    edges = np.random.permutation(np.arange(24, 48))
+    cube = tuple(corners) + tuple(edges)
+    """
+    corns = np.arange(0, 24)
+    print(corns)
+    print(np.random.permutation(corns))
+    edgs = np.arange(24, 48)
+    print(edgs)
+    print(np.random.permutation(edgs))
+    """
+    while not is_valid(cube):
+        corners = np.random.permutation(np.arange(0, 24))
+        edges = np.random.permutation(np.arange(24, 48))
+        cube = tuple(corners) + tuple(edges)
 
     return cube
