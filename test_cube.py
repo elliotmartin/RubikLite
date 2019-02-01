@@ -6,10 +6,11 @@ class test_cube(unittest.TestCase):
     def test_solve(self):
         scramble = multiple_perm_apply([Ri, Ui, F, Di, L, L, B, B, R, R, B, B, U, F, F, D, U, F, F, R, R, F, D, R, R, B, L, Di, B, B, Ri, Di, F, F, Ri, Ui, F], I)
         solution = multiple_perm_apply([R, Li, Di, L, Ui, R, R, Di, L, L, Di, L, L, D, F, F, U, U, F, F, L, L, F, R, R], scramble)
-        #print(multiple_perm_apply([Ri, Ui, F, Di, L, L, B, B, R, R, B, B, U, F, F, D, U, F, F, R, R, F, D, R, R, B, L, Di, B, B, Ri, Di, F, F, Ri, Ui, F,
-                                   #R, Li, Di, L, Ui, R, R, Di, L, L, Di, L, L, D, F, F, U, U, F, F, L, L, F, R, R], I))
-        #print(solution)
         self.assertEqual(I, solution)
+        self.assertEqual(multiple_perm_apply([R, U, Ri, Ui, Li, U, L, F, Ui, Fi, R, Ui, Ri, Ui, Li, U, U, L, Ui, Li, U, L, Ui, F, R, U, Ri, Ui, Fi, Ui, Li, U, U, L, U, U, Li,
+                           U, L, F, R, U, Ri, Ui, Fi, F, R, U, Ri, Ui, Fi,
+                           Ri, Fi, Li, F, R, Fi, L, F, R, Ui, R, U, R, U, R, Ui, Ri, Ui, R, R, Ui, R, U, Ri,
+                           Ui, Ri, F, R, R, Ui, Ri, Ui, R, U, Ri, Fi, U], I), I)
 
     def test_all_basic_moves(self):
         self.assertEqual(I, multiple_perm_apply([F] * 4, I))
@@ -119,8 +120,8 @@ class test_cube(unittest.TestCase):
             self.assertEqual(check_permutation_parity(Di), True)
             self.assertEqual(check_permutation_parity(F), True)
             self.assertEqual(check_permutation_parity(Fi), True)
-            #self.assertEqual(check_permutation_parity(B), True)
-            #self.assertEqual(check_permutation_parity(Bi), True)
+            self.assertEqual(check_permutation_parity(B), True)
+            self.assertEqual(check_permutation_parity(Bi), True)
             bad_perm_corner = (3, 4, 5, 0, 1, 2, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
             bad_perm_edge = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 46, 47, 44, 45)
             self.assertEqual(check_permutation_parity(bad_perm_corner), False)
@@ -134,7 +135,7 @@ class test_cube(unittest.TestCase):
          bad_perm_edge = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 46, 47, 44, 45)
          self.assertEqual(is_valid(I), True)
          self.assertEqual(is_valid(R), True)
-         #self.assertEqual(is_valid(multiple_perm_apply([L,R,D,B,R,U,F,R,D], I)), True)
+         self.assertEqual(is_valid(multiple_perm_apply([L,R,D,B,R,U,F,R,D], I)), True)
          self.assertEqual(is_valid(corner_twist), False)
          self.assertEqual(is_valid(edge_flip), False)
          self.assertEqual(is_valid(bad_perm_corner), False)
