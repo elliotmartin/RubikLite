@@ -63,19 +63,37 @@ db = yo = 37  # (14th cubie; down face)
 bu = ow = 38  # (15th cubie; back face)
 ub = wo = 39  # (15th cubie; up face)
 
-ur = wb = 40  # (16th cubie; back face)
-ru = bw = 41  # (16th cubie; back face)
+ur = wb = 40  # (16th cubie; up face)
+ru = bw = 41  # (16th cubie; right face)
 
-ul = wg = 42  # (17th cubie; back face)
+ul = wg = 42  # (17th cubie; up face)
 lu = gw = 43  # (17th cubie; back face)
 
-dr = yb = 44  # (18th cubie; back face)
-rd = by = 45  # (18th cubie; back face)
+dr = yb = 44  # (18th cubie; down face)
+rd = by = 45  # (18th cubie; right face)
 
-dl = yg = 46  # (19th cubie; back face)
-ld = gy = 47  # (19th cubie; Back face)
+dl = yg = 46  # (19th cubie; down face)
+ld = gy = 47  # (19th cubie; left face)
+
+# preperations for playing with an API
+"""
+edges_to_nums = {'rgw': 0, 'gwr': 1, 'wrg': 2, 'rwb': 3, 'wbr': 4, 'brw': 5, 'ryg': 6, 'ygr': 7, 'gry': 8, 'rby': 9,
+                 'byr': 10, 'yrb': 11, 'owg': 12, 'wgo': 13, 'gow': 14, 'obw': 15, 'bwo': 16, 'wob': 17, 'ogy': 18,
+                 'gyo': 19, 'yog': 20, 'oyb': 21, 'ybo': 22, 'boy': 23, 'fu': 24, 'uf': 25, 'fr': 26, 'rf': 27, 'fl': 28,
+                 'lf': 29, 'fd': 30, 'df': 31, 'br': 32, 'rb': 33, 'bl': 34, 'lb': 35, 'bd': 36, 'db': 37, 'bu': 38,
+                 'ub': 39, 'ur': 40, 'ru': 41, 'ul': 42, 'lu': 43, 'dr': 44, 'rd': 45, 'dl': 46, 'ld': 47}
+
+nums_to_edges = {0: 'rgw', 1: 'gwr', 2: 'wrg', 3: 'rwb', 4: 'wbr', 5: 'brw', 6: 'ryg', 7: 'ygr', 8: 'gry', 9: 'rby',
+                 10: 'byr', 11: 'yrb', 12: 'owg', 13: 'wgo', 14: 'gow', 15: 'obw', 16: 'bwo', 17: 'wob', 18: 'ogy', 19:
+                     'gyo', 20: 'yog', 21: 'oyb', 22: 'ybo', 23: 'boy', 24: 'fu', 25: 'uf', 26: 'fr', 27: 'rf',
+                 28: 'fl', 29: 'lf', 30: 'fd', 31: 'df', 32: 'br', 33: 'rb', 34: 'bl', 35: 'lb', 36: 'bd', 37: 'db',
+                 38: 'bu', 39: 'ub', 40: 'ur', 41: 'ru', 42: 'ul', 43: 'lu', 44: 'dr', 45: 'rd', 46: 'dl', 47: 'ld'}
 
 
+def extract_front(cube):
+
+    None
+"""
 
 def perm_apply(perm, cube):
     """
@@ -188,6 +206,7 @@ def compact_cube(cube):
     compact_corners = corners[::3]
     compact_edges = edges[::2]
     return tuple(compact_corners) + tuple(compact_edges)
+
 
 def expand_cube(compact_cube):
     """
@@ -331,14 +350,7 @@ def generate_cube():
     corners = np.random.permutation(np.arange(0, 24))
     edges = np.random.permutation(np.arange(24, 48))
     cube = tuple(corners) + tuple(edges)
-    """
-    corns = np.arange(0, 24)
-    print(corns)
-    print(np.random.permutation(corns))
-    edgs = np.arange(24, 48)
-    print(edgs)
-    print(np.random.permutation(edgs))
-    """
+
     while not is_valid(cube):
         corners = np.random.permutation(np.arange(0, 24))
         edges = np.random.permutation(np.arange(24, 48))

@@ -19,8 +19,8 @@ class TestCube(unittest.TestCase):
         self.assertEqual(I, multiple_perm_apply([Di] * 4, I))
         self.assertEqual(I, multiple_perm_apply([Li] * 4, I))
 
-    # sexy refers to the alg RUR'U' which is really nice to perform. when done 6 times it acts as the identity.
-    # Testing all cases of this tests all interactions of turns with eachother.
+    """sexy refers to the alg RUR'U' which is really nice to perform. when done 6 times it acts as the identity.
+    # Testing all cases of this tests all interactions of turns with eachother"""
     def test_R_sexy(self):
         self.assertEqual(I, multiple_perm_apply([R, U, Ri, Ui] * 6, I))
         self.assertEqual(I, multiple_perm_apply([R, F, Ri, Fi] * 6, I))
