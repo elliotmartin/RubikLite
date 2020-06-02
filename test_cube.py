@@ -76,43 +76,43 @@ class TestCube(unittest.TestCase):
         self.assertEqual(I, expand_cube(compact_cube(I)))
         self.assertEqual(multiple_perm_apply([R,U,F,B,D,L,R,U,L,B], I), expand_cube(compact_cube(multiple_perm_apply([R,U,F,B,D,L,R,U,L,B],I))))
 
-    def test_check_corner_orientation(self):
-        self.assertEqual(check_corner_orientation(I), True)
-        self.assertEqual(check_corner_orientation(F), True)
-        self.assertEqual(check_corner_orientation(Fi), True)
-        self.assertEqual(check_corner_orientation(R), True)
-        self.assertEqual(check_corner_orientation(Ri), True)
-        self.assertEqual(check_corner_orientation(U), True)
-        self.assertEqual(check_corner_orientation(Ui), True)
-        self.assertEqual(check_corner_orientation(B), True)
-        self.assertEqual(check_corner_orientation(Bi), True)
-        self.assertEqual(check_corner_orientation(D), True)
-        self.assertEqual(check_corner_orientation(Di), True)
-        self.assertEqual(check_corner_orientation(L), True)
-        self.assertEqual(check_corner_orientation(Li), True)
+    def test_check_corner_orientation_validity(self):
+        self.assertEqual(check_corner_orientation_validity(I), True)
+        self.assertEqual(check_corner_orientation_validity(F), True)
+        self.assertEqual(check_corner_orientation_validity(Fi), True)
+        self.assertEqual(check_corner_orientation_validity(R), True)
+        self.assertEqual(check_corner_orientation_validity(Ri), True)
+        self.assertEqual(check_corner_orientation_validity(U), True)
+        self.assertEqual(check_corner_orientation_validity(Ui), True)
+        self.assertEqual(check_corner_orientation_validity(B), True)
+        self.assertEqual(check_corner_orientation_validity(Bi), True)
+        self.assertEqual(check_corner_orientation_validity(D), True)
+        self.assertEqual(check_corner_orientation_validity(Di), True)
+        self.assertEqual(check_corner_orientation_validity(L), True)
+        self.assertEqual(check_corner_orientation_validity(Li), True)
         corner_twist = (
         2, 0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
         30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47)
-        self.assertEqual(check_corner_orientation(corner_twist), False)
+        self.assertEqual(check_corner_orientation_validity(corner_twist), False)
 
-    def test_check_edge_orientation(self):
-        self.assertEqual(check_edge_orientation(I), True)
-        self.assertEqual(check_edge_orientation(F), True)
-        self.assertEqual(check_edge_orientation(Fi), True)
-        self.assertEqual(check_edge_orientation(R), True)
-        self.assertEqual(check_edge_orientation(Ri), True)
-        self.assertEqual(check_edge_orientation(U), True)
-        self.assertEqual(check_edge_orientation(Ui), True)
-        self.assertEqual(check_edge_orientation(B), True)
-        self.assertEqual(check_edge_orientation(Bi), True)
-        self.assertEqual(check_edge_orientation(D), True)
-        self.assertEqual(check_edge_orientation(Di), True)
-        self.assertEqual(check_edge_orientation(L), True)
-        self.assertEqual(check_edge_orientation(Li), True)
+    def test_check_edge_orientation_validity(self):
+        self.assertEqual(check_edge_orientation_validity(I), True)
+        self.assertEqual(check_edge_orientation_validity(F), True)
+        self.assertEqual(check_edge_orientation_validity(Fi), True)
+        self.assertEqual(check_edge_orientation_validity(R), True)
+        self.assertEqual(check_edge_orientation_validity(Ri), True)
+        self.assertEqual(check_edge_orientation_validity(U), True)
+        self.assertEqual(check_edge_orientation_validity(Ui), True)
+        self.assertEqual(check_edge_orientation_validity(B), True)
+        self.assertEqual(check_edge_orientation_validity(Bi), True)
+        self.assertEqual(check_edge_orientation_validity(D), True)
+        self.assertEqual(check_edge_orientation_validity(Di), True)
+        self.assertEqual(check_edge_orientation_validity(L), True)
+        self.assertEqual(check_edge_orientation_validity(Li), True)
         edge_flip = (
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
         30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 47, 46)
-        self.assertEqual(check_edge_orientation(edge_flip), False)
+        self.assertEqual(check_edge_orientation_validity(edge_flip), False)
 
     def test_check_permutation_parity(self):
         for m in moves:

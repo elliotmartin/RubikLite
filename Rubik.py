@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 # flu refers to the front face (because f is first) of the cubie that
 # has a front face, a left face, and an upper face.
@@ -95,6 +96,7 @@ def extract_front(cube):
     None
 """
 
+
 def perm_apply(perm, cube):
     """
     Applies a permutation to a cube
@@ -104,7 +106,6 @@ def perm_apply(perm, cube):
     :return a new permutation with cube permutated according to cube
     """
     return (tuple(cube[i] for i in perm))
-
 
 
 def perm_inverse(perm):
@@ -161,9 +162,9 @@ L = (ulb, lbu, bul, fur, urf, rfu, ufl, flu, luf, frd, rdf, dfr, dbl, bld, ldb, 
 Li = perm_inverse(L)
 
 moves = (F, Fi, U, Ui, R, Ri, B, Bi, D, Di, L, Li)
-# Dictionary of move names so that we can parse strings of moves
-move_names = {F: 'F', Fi: 'Fi', U: 'U', Ui: 'Ui', R: 'R', Ri: 'Ri', B: 'B', Bi: 'Bi', D: 'D', Di: 'Di', L: 'L', Li: 'Li'
-              }
+
+perm_to_string_dict = {F: 'F', Fi: 'Fi', U: 'U', Ui: 'Ui', R: 'R', Ri: 'Ri', B: 'B', Bi: 'Bi', D: 'D', Di: 'Di', L: 'L', Li: 'Li'}
+string_to_perm_dicts = {v: k for k, v in perm_to_string_dict.items()}
 
 
 def perms_only(cube):
@@ -240,17 +241,16 @@ def expand_cube(compact_cube):
     return corners+edges
 
 
-
 def is_valid(cube):
     """
     Checks if a given permutation is a valid cube
     :param: 48 length cube
     :return: True if it's a valid Rubik's cube, otherwise False
     """
-    return check_edge_orientation(cube) & check_corner_orientation(cube) & check_permutation_parity(cube)
+    return check_edge_orientation_validity(cube) & check_corner_orientation_validity(cube) & check_permutation_parity(cube)
 
 
-def check_corner_orientation(cube):
+def check_corner_orientation_validity(cube):
     """
     Sum of corner orientations is always divisible by 3. Thus, the sum of all first corners mod 3 must be divisible by 3
     Take each first corner number and mod it by 3. If the result is 2 subtract 1 otherwise add the number you get.
@@ -271,7 +271,7 @@ def check_corner_orientation(cube):
     return True
 
 
-def check_edge_orientation(cube):
+def check_edge_orientation_validity(cube):
     """
     Edge parity:
     Even number of edges flipped
@@ -357,3 +357,59 @@ def generate_cube():
         cube = tuple(corners) + tuple(edges)
 
     return cube
+
+
+def check_edge_orientation(cube):
+    """
+    Check the orientation of edges using the algorithm found here:
+    http://cube.rider.biz/zz.php?p=eoline#eo_detection
+    :param cube:
+    :return: boolean: True if all edges are oriented, otherwise False
+    """
+    edges = cube[24:]
+    print(edges)
+    # first look at the U edges
+    for e in [edges[:2], edges[14:16]]:
+        # If it's Orange or Red it's bad
+        if e[1] in [24, 26, 28, 30, 32, 34, 36, 38]:
+            return False
+
+        # If it's g/b showing AND w/y other color it's bad
+        if e[1] in [41, 43, 45, 47]:
+            return False
+
+    # we work with the slice edges separately because they're "flipped"
+    for e in [edges[16:18], edges[18:20]]:
+        if e[0] in [24, 26, 28, 30, 32, 34, 36, 38]:
+            return False
+
+        if e[0] in [41, 43, 45, 47]:
+            return False
+
+    # then look at the D edges
+    for e in [edges[6:8], edges[12:14]]:
+        if e[1] in [24, 26, 28, 30, 32, 34, 36, 38]:
+            return False
+
+    for e in [edges[20:22], edges[22:24]]:
+        if e[0] in [41, 43, 45, 47]:
+            return False
+
+    # then look at the E slice edges
+    for e in [edges[:], edges[:], edges[:], edges[:]]:
+        None
+
+    return True
+
+print(check_edge_orientation(I))
+
+
+def eo_preserve_scramble():
+    subset_moves = ['R', 'U', 'L']
+    return [string_to_perm_dicts[random.choice(subset_moves)] for _ in range(2)]
+
+#print(eo_preserve_scramble())
+
+# for i in range(100):
+#     test_cube = generate_cube()
+#     print(multiple_perm_apply(eo_preserve_scramble(), test_cube))
