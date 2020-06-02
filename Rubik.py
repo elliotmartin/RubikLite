@@ -397,7 +397,7 @@ def check_edge_orientation(cube):
 
     # then look at the E slice edges
     for e in [edges[:], edges[:], edges[:], edges[:]]:
-        None
+        print(e)
 
     return True
 
