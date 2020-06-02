@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../MusicCube/.idea/MusicCube.iml" filepath="$PROJECT_DIR$/../MusicCube/.idea/MusicCube.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/RubikLite.iml" filepath="$PROJECT_DIR$/.idea/RubikLite.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../bifdiagram/.idea/bifdiagram.iml" filepath="$PROJECT_DIR$/../bifdiagram/.idea/bifdiagram.iml" />
+      <module fileurl="file://$USER_HOME$/scripts/discord/.idea/discord.iml" filepath="$USER_HOME$/scripts/discord/.idea/discord.iml" />
+      <module fileurl="file://$USER_HOME$/scripts/giants/.idea/giants.iml" filepath="$USER_HOME$/scripts/giants/.idea/giants.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/code/pipeline_api_archive/.idea/pipeline_api_archive.iml" filepath="$USER_HOME$/Desktop/code/pipeline_api_archive/.idea/pipeline_api_archive.iml" />
     </modules>
   </component>
 </project>

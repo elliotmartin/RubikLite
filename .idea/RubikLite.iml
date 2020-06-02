@@ -4,8 +4,9 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="MusicCube" />
-    <orderEntry type="module" module-name="bifdiagram" />
+    <orderEntry type="module" module-name="discord" />
+    <orderEntry type="module" module-name="giants" />
+    <orderEntry type="module" module-name="pipeline_api_archive" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />
