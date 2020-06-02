@@ -152,6 +152,15 @@ class TestCube(unittest.TestCase):
         for i in range(100):
             self.assertEqual(is_valid(generate_cube()), True)
 
+    def test_check_edge_orientation(self):
+        for _ in [R, U, D, L]:
+            self.assertEqual(check_edge_orientation(_), True)
+        for _ in [F, B]:
+            self.assertEqual(check_edge_orientation(_), False)
+        for _ in range(100):
+            self.assertEqual(check_edge_orientation(multiple_perm_apply(eo_preserve_scramble(), I)), True)
+
+
 
 if __name__ == '__main__':
     unittest.main()
