@@ -363,46 +363,54 @@ def check_edge_orientation(cube):
     """
     Check the orientation of edges using the algorithm found here:
     http://cube.rider.biz/zz.php?p=eoline#eo_detection
+    TODO: refactor this code; it's really ugly
     :param cube:
     :return: boolean: True if all edges are oriented, otherwise False
     """
     edges = cube[24:]
+    BAD_EDGES = [27, 29, 33, 35, 41, 43, 45, 47, 24, 38, 30, 36]
     print(edges)
     # first look at the U edges
     for e in [edges[:2], edges[14:16]]:
-        # If it's Orange or Red it's bad
-        if e[1] in [24, 26, 28, 30, 32, 34, 36, 38]:
+        print(e)
+        # If it's Green or Blue it's bad
+        if e[1] in BAD_EDGES:
             return False
 
         # If it's g/b showing AND w/y other color it's bad
-        if e[1] in [41, 43, 45, 47]:
+        if e[1] in BAD_EDGES:
             return False
 
     # we work with the slice edges separately because they're "flipped"
     for e in [edges[16:18], edges[18:20]]:
-        if e[0] in [24, 26, 28, 30, 32, 34, 36, 38]:
+        print(e)
+        if e[0] in BAD_EDGES:
             return False
 
-        if e[0] in [41, 43, 45, 47]:
+        if e[0] in BAD_EDGES:
             return False
 
     # then look at the D edges
     for e in [edges[6:8], edges[12:14]]:
-        if e[1] in [24, 26, 28, 30, 32, 34, 36, 38]:
+        print(e)
+        if e[1] in BAD_EDGES:
             return False
 
     for e in [edges[20:22], edges[22:24]]:
-        if e[0] in [41, 43, 45, 47]:
+        print(e)
+        if e[0] in BAD_EDGES:
             return False
 
     # then look at the E slice edges
-    for e in [edges[:], edges[:], edges[:], edges[:]]:
+    for e in [edges[2:4], edges[4:6], edges[8:10], edges[10:12]]:
         print(e)
+        if e[0] in [27, 29, 33, 35, 41, 43, 45, 47]:
+            return False
+
+        if e[0] in [41, 43, 45, 47]:
+            return False
 
     return True
-
-print(check_edge_orientation(I))
-
 
 def eo_preserve_scramble():
     subset_moves = ['R', 'U', 'L']
