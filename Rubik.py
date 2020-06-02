@@ -369,10 +369,8 @@ def check_edge_orientation(cube):
     """
     edges = cube[24:]
     BAD_EDGES = [27, 29, 33, 35, 41, 43, 45, 47, 24, 38, 30, 36]
-    print(edges)
     # first look at the U edges
     for e in [edges[:2], edges[14:16]]:
-        print(e)
         # If it's Green or Blue it's bad
         if e[1] in BAD_EDGES:
             return False
@@ -383,7 +381,6 @@ def check_edge_orientation(cube):
 
     # we work with the slice edges separately because they're "flipped"
     for e in [edges[16:18], edges[18:20]]:
-        print(e)
         if e[0] in BAD_EDGES:
             return False
 
@@ -392,18 +389,15 @@ def check_edge_orientation(cube):
 
     # then look at the D edges
     for e in [edges[6:8], edges[12:14]]:
-        print(e)
         if e[1] in BAD_EDGES:
             return False
 
     for e in [edges[20:22], edges[22:24]]:
-        print(e)
         if e[0] in BAD_EDGES:
             return False
 
     # then look at the E slice edges
     for e in [edges[2:4], edges[4:6], edges[8:10], edges[10:12]]:
-        print(e)
         if e[0] in [27, 29, 33, 35, 41, 43, 45, 47]:
             return False
 
