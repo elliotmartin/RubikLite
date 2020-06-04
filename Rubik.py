@@ -368,43 +368,21 @@ def check_edge_orientation(cube):
     :return: boolean: True if all edges are oriented, otherwise False
     """
     edges = cube[24:]
+    # Bad edges are green/blue and red/orange with white/yellow
     bad_edges = [27, 29, 33, 35, 41, 43, 45, 47, 24, 38, 30, 36]
-    # first look at the U edges
-    for e in [edges[:2], edges[14:16]]:
-        # If it's Green or Blue it's bad
+
+    # We can check all the edges in 1 step where it's the 2nd index we care about
+    for e in [edges[:2], edges[14:16], edges[6:8], edges[12:14]]:
         if e[1] in bad_edges:
             return False
-
-        # If it's g/b showing AND w/y other color it's bad
-        if e[1] in bad_edges:
-            return False
-
-    # we work with the slice edges separately because they're "flipped"
-    for e in [edges[16:18], edges[18:20]]:
+    # And all the edges in 1 step where it's the first index we care about
+    for e in [edges[2:4], edges[4:6], edges[8:10], edges[10:12], edges[16:18], edges[18:20], edges[20:22], edges[22:24]]:
         if e[0] in bad_edges:
             return False
 
-        if e[0] in bad_edges:
-            return False
-
-    # then look at the D edges
-    for e in [edges[6:8], edges[12:14]]:
-        if e[1] in bad_edges:
-            return False
-
-    for e in [edges[20:22], edges[22:24]]:
-        if e[0] in bad_edges:
-            return False
-
-    # then look at the E slice edges
-    for e in [edges[2:4], edges[4:6], edges[8:10], edges[10:12]]:
-        if e[0] in bad_edges:
-            return False
-
-        if e[0] in bad_edges:
-            return False
-
+    # If no edges are bad then all edges are good
     return True
+
 
 def eo_preserve_scramble():
     """
@@ -413,9 +391,3 @@ def eo_preserve_scramble():
     """
     subset_moves = ['R', 'U', 'L', 'D']
     return [string_to_perm_dicts[random.choice(subset_moves)] for _ in range(2)]
-
-#print(eo_preserve_scramble())
-
-# for i in range(100):
-#     test_cube = generate_cube()
-#     print(multiple_perm_apply(eo_preserve_scramble(), test_cube))
