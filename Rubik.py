@@ -76,7 +76,7 @@ rd = by = 45  # (18th cubie; right face)
 dl = yg = 46  # (19th cubie; down face)
 ld = gy = 47  # (19th cubie; left face)
 
-# preperations for playing with an API
+# Preperations for playing with an API
 """
 edges_to_nums = {'rgw': 0, 'gwr': 1, 'wrg': 2, 'rwb': 3, 'wbr': 4, 'brw': 5, 'ryg': 6, 'ygr': 7, 'gry': 8, 'rby': 9,
                  'byr': 10, 'yrb': 11, 'owg': 12, 'wgo': 13, 'gow': 14, 'obw': 15, 'bwo': 16, 'wob': 17, 'ogy': 18,
