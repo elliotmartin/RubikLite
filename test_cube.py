@@ -160,8 +160,6 @@ class TestCube(unittest.TestCase):
         for _ in range(100):
             self.assertEqual(check_edge_orientation(multiple_perm_apply(eo_preserve_scramble(), I)), True)
 
-        self.assertEqual((True, False))
-
 
 
 if __name__ == '__main__':
