@@ -363,7 +363,6 @@ def check_edge_orientation(cube):
     """
     Check the orientation of edges using the algorithm found here:
     http://cube.rider.biz/zz.php?p=eoline#eo_detection
-    TODO: refactor this code; it's really ugly
     :param cube:
     :return: boolean: True if all edges are oriented, otherwise False
     """
