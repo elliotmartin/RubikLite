@@ -368,46 +368,50 @@ def check_edge_orientation(cube):
     :return: boolean: True if all edges are oriented, otherwise False
     """
     edges = cube[24:]
-    BAD_EDGES = [27, 29, 33, 35, 41, 43, 45, 47, 24, 38, 30, 36]
+    bad_edges = [27, 29, 33, 35, 41, 43, 45, 47, 24, 38, 30, 36]
     # first look at the U edges
     for e in [edges[:2], edges[14:16]]:
         # If it's Green or Blue it's bad
-        if e[1] in BAD_EDGES:
+        if e[1] in bad_edges:
             return False
 
         # If it's g/b showing AND w/y other color it's bad
-        if e[1] in BAD_EDGES:
+        if e[1] in bad_edges:
             return False
 
     # we work with the slice edges separately because they're "flipped"
     for e in [edges[16:18], edges[18:20]]:
-        if e[0] in BAD_EDGES:
+        if e[0] in bad_edges:
             return False
 
-        if e[0] in BAD_EDGES:
+        if e[0] in bad_edges:
             return False
 
     # then look at the D edges
     for e in [edges[6:8], edges[12:14]]:
-        if e[1] in BAD_EDGES:
+        if e[1] in bad_edges:
             return False
 
     for e in [edges[20:22], edges[22:24]]:
-        if e[0] in BAD_EDGES:
+        if e[0] in bad_edges:
             return False
 
     # then look at the E slice edges
     for e in [edges[2:4], edges[4:6], edges[8:10], edges[10:12]]:
-        if e[0] in [27, 29, 33, 35, 41, 43, 45, 47]:
+        if e[0] in bad_edges:
             return False
 
-        if e[0] in [41, 43, 45, 47]:
+        if e[0] in bad_edges:
             return False
 
     return True
 
 def eo_preserve_scramble():
-    subset_moves = ['R', 'U', 'L']
+    """
+    Generates a scramble of moves that don't change the edge orientation
+    :return: List of moves
+    """
+    subset_moves = ['R', 'U', 'L', 'D']
     return [string_to_perm_dicts[random.choice(subset_moves)] for _ in range(2)]
 
 #print(eo_preserve_scramble())
