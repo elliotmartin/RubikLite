@@ -161,7 +161,8 @@ L = (ulb, lbu, bul, fur, urf, rfu, ufl, flu, luf, frd, rdf, dfr, dbl, bld, ldb, 
      rbd, fu, uf, fr, rf, ul, lu, fd, df, br, rb, dl, ld, bd, db, bu, ub, ur, ru, bl, lb, dr, rd, fl, lf)
 Li = perm_inverse(L)
 
-moves = (F, Fi, U, Ui, R, Ri, B, Bi, D, Di, L, Li)
+moves = [F, Fi, U, Ui, R, Ri, B, Bi, D, Di, L, Li]
+forward_moves = [F, U, R, B, D, L]
 
 perm_to_string_dict = {F: 'F', Fi: 'Fi', U: 'U', Ui: 'Ui', R: 'R', Ri: 'Ri', B: 'B', Bi: 'Bi', D: 'D', Di: 'Di', L: 'L', Li: 'Li'}
 string_to_perm_dicts = {v: k for k, v in perm_to_string_dict.items()}
@@ -381,6 +382,7 @@ def check_edge_orientation(cube):
 
     # If no edges are bad then all edges are good
     return True
+
 
 
 def eo_preserve_scramble():
