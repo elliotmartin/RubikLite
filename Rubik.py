@@ -162,6 +162,7 @@ L = (ulb, lbu, bul, fur, urf, rfu, ufl, flu, luf, frd, rdf, dfr, dbl, bld, ldb, 
 Li = perm_inverse(L)
 
 moves = [F, Fi, U, Ui, R, Ri, B, Bi, D, Di, L, Li]
+quarter_twists = moves
 forward_moves = [F, U, R, B, D, L]
 
 perm_to_string_dict = {F: 'F', Fi: 'Fi', U: 'U', Ui: 'Ui', R: 'R', Ri: 'Ri', B: 'B', Bi: 'Bi', D: 'D', Di: 'Di', L: 'L', Li: 'Li'}
@@ -382,7 +383,6 @@ def check_edge_orientation(cube):
 
     # If no edges are bad then all edges are good
     return True
-
 
 
 def eo_preserve_scramble():
