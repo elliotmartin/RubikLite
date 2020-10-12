@@ -6,18 +6,8 @@ class TestCube(unittest.TestCase):
 
     def test_all_basic_moves(self):
         """Tests each by move by applying it 4 times on a solve cube and confirming that it returns a solved cube"""
-        self.assertEqual(I, multiple_perm_apply([F] * 4, I))
-        self.assertEqual(I, multiple_perm_apply([R] * 4, I))
-        self.assertEqual(I, multiple_perm_apply([U] * 4, I))
-        self.assertEqual(I, multiple_perm_apply([B] * 4, I))
-        self.assertEqual(I, multiple_perm_apply([D] * 4, I))
-        self.assertEqual(I, multiple_perm_apply([L] * 4, I))
-        self.assertEqual(I, multiple_perm_apply([Fi] * 4, I))
-        self.assertEqual(I, multiple_perm_apply([Ri] * 4, I))
-        self.assertEqual(I, multiple_perm_apply([Ui] * 4, I))
-        self.assertEqual(I, multiple_perm_apply([Bi] * 4, I))
-        self.assertEqual(I, multiple_perm_apply([Di] * 4, I))
-        self.assertEqual(I, multiple_perm_apply([Li] * 4, I))
+        for m in moves:
+            self.assertEquals(I, multiple_perm_apply([m] * 4, I))
 
     """sexy refers to the alg RUR'U' which is really nice to perform. when done 6 times it acts as the identity.
     # Testing all cases of this tests all interactions of turns with eachother"""
@@ -157,7 +147,7 @@ class TestCube(unittest.TestCase):
             self.assertEqual(check_edge_orientation(_), True)
         for _ in [F, B]:
             self.assertEqual(check_edge_orientation(_), False)
-        for _ in range(100):
+        for _ in range(10000):
             self.assertEqual(check_edge_orientation(multiple_perm_apply(eo_preserve_scramble(), I)), True)
 
 
