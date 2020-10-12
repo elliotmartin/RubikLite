@@ -1,13 +1,13 @@
 from Rubik import *
 import unittest
 
-class TestCube(unittest.TestCase):
 
+class TestCube(unittest.TestCase):
 
     def test_all_basic_moves(self):
         """Tests each by move by applying it 4 times on a solve cube and confirming that it returns a solved cube"""
         for m in moves:
-            self.assertEquals(I, multiple_perm_apply([m] * 4, I))
+            self.assertEqual(I, multiple_perm_apply([m] * 4, I))
 
     """sexy refers to the alg RUR'U' which is really nice to perform. when done 6 times it acts as the identity.
     # Testing all cases of this tests all interactions of turns with eachother"""
@@ -149,7 +149,6 @@ class TestCube(unittest.TestCase):
             self.assertEqual(check_edge_orientation(_), False)
         for _ in range(10000):
             self.assertEqual(check_edge_orientation(multiple_perm_apply(eo_preserve_scramble(), I)), True)
-
 
 
 if __name__ == '__main__':
