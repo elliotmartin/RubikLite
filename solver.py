@@ -1,5 +1,6 @@
 import Rubik
 from collections import deque
+import random
 
 def prettify_cube_list(cube_list):
     if not cube_list:
@@ -9,48 +10,30 @@ def prettify_cube_list(cube_list):
 def cube_bfs(goal, condition_function):
     visited = deque()
     visited.append((goal, []))
-    while len(visited) < 2:
-        next_cube = visited.popleft()
-        print("popped ", visited)
-        for m in Rubik.moves:
-            moves = next_cube[1] + [m]
-            new_cube = Rubik.perm_apply(m, next_cube[0])
-            print("1 new_cube ", new_cube)
-            print("2 result ", condition_function(new_cube))
-            print("2.5 prettity", prettify_cube_list(moves))
-            if condition_function(new_cube):
-                return moves[1]
-            visited.append((new_cube, moves))
-            print("3 v", visited)
-    return None
-
-def stage_one(cube):
-    return cube_bfs(cube, Rubik.check_edge_orientation)
-
-def fix_edge_orientation(cube):
-    """
-    Given a starting position, output a sequence of moves that when applied to cube solve the edge orientation
-    This is traversing from G0 to G1 in Thistlethwaite's Algorithm
-    :param cube: starting position
-    :return: list of moves
-    """
-
-    visited = deque()
-    visited.append((cube,[]))
     while visited:
         next_cube = visited.popleft()
         for m in Rubik.moves:
             moves = next_cube[1] + [m]
             new_cube = Rubik.perm_apply(m, next_cube[0])
-            if Rubik.check_edge_orientation(new_cube):
-                return [moves[1]]
+            if condition_function(new_cube):
+                return moves
             visited.append((new_cube, moves))
     return None
 
+def stage_one(cube):
+    return cube_bfs(cube, Rubik.check_edge_orientation)
+
 
 if __name__ == "__main__":
-    scramble = [Rubik.F, Rubik.R, Rubik.Bi]
+    #scramble = [Rubik.F, Rubik.R, Rubik.Bi]
+    scramble = []
+    for i in range(20):
+        scramble.append(random.choice(Rubik.moves))
+    print(prettify_cube_list(scramble))
+
+    #scramble = [Rubik.F, Rubik.R, Rubik.Bi]
     scrambled = Rubik.multiple_perm_apply(scramble, Rubik.I)
-    solution = stage_one(Rubik.multiple_perm_apply(scramble, Rubik.I))
-    print(prettify_cube_list(solution))
+    solution = cube_bfs(scrambled, Rubik.check_edge_orientation)
+    print(solution)
+    print("fix_eo: ", prettify_cube_list(solution))
 
