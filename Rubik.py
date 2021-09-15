@@ -166,6 +166,9 @@ quarter_twists = moves
 forward_moves = [F, U, R, B, D, L]
 
 perm_to_string_dict = {F: 'F', Fi: 'Fi', U: 'U', Ui: 'Ui', R: 'R', Ri: 'Ri', B: 'B', Bi: 'Bi', D: 'D', Di: 'Di', L: 'L', Li: 'Li'}
+perm_to_string_dict_htm = {F: 'F', Fi: 'Fi', perm_apply(F, F): 'F2', U: 'U', Ui: 'Ui', perm_apply(U, U): 'U2',
+                           R: 'R', Ri: 'Ri', perm_apply(R, R): 'R2', B: 'B', Bi: 'Bi', perm_apply(B, B): 'B2',
+                           D: 'D', Di: 'Di', perm_apply(D, D): 'D2', L: 'L', Li: 'Li', perm_apply(L, L): 'L2'}
 string_to_perm_dicts = {v: k for k, v in perm_to_string_dict.items()}
 
 
