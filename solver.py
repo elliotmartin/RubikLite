@@ -2,10 +2,23 @@ import Rubik
 from collections import deque
 import random
 
+#g0 is all moves
+#g1 - L,R,F,B,U2,D2
+#g2 - L,R,F2,B2,U2,D2
+#g3 - L2,R2,F2,B2,U2,D2
+G0_MOVES = [Rubik.moves]
+G1_MOVES = [Rubik.L, Rubik.R, Rubik.F, Rubik.B, Rubik.perm_apply(Rubik.U, Rubik.U), Rubik.perm_apply(Rubik.D, Rubik.D)]
+G2_MOVES = [Rubik.L, Rubik.R, Rubik.perm_apply(Rubik.F, Rubik.F), Rubik.perm_apply(Rubik.B, Rubik.B),
+            Rubik.perm_apply(Rubik.U, Rubik.U), Rubik.perm_apply(Rubik.D, Rubik.D)]
+G3_MOVES = [Rubik.perm_apply(Rubik.L, Rubik.L), Rubik.perm_apply(Rubik.R, Rubik.R), Rubik.perm_apply(Rubik.F, Rubik.F),
+            Rubik.perm_apply(Rubik.B, Rubik.B), Rubik.perm_apply(Rubik.U, Rubik.U), Rubik.perm_apply(Rubik.D, Rubik.D)]
+
+
 def prettify_cube_list(cube_list):
     if not cube_list:
         raise Exception("Empty cube_list provided")
     return [Rubik.perm_to_string_dict[m] for m in cube_list]
+
 
 def cube_bfs(goal, condition_function):
     visited = deque()
@@ -19,6 +32,7 @@ def cube_bfs(goal, condition_function):
                 return moves
             visited.append((new_cube, moves))
     return None
+
 
 def stage_one(cube):
     return cube_bfs(cube, Rubik.check_edge_orientation)
