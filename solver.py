@@ -32,11 +32,8 @@ def check_complete_g2(cube):
             check_edge_placement = False
 
     compact_corners = [i % 3 for i in Rubik.compact_cube(cube)[0:8]]
-    #print(compact_corners)
     if sum(compact_corners) > 0:
         check_corner_orientation = False
-
-    #print(check_edge_placement, check_corner_orientation)
 
     return check_edge_placement & check_corner_orientation
 
@@ -62,8 +59,7 @@ def cube_bfs(start, condition_function, valid_moves):
             if condition_function(new_cube):
                 return moves
             visited.append((new_cube, moves))
-        #print(max_depth)
-        if max_depth > 10:
+        if max_depth > 15:
             break
     return None
 
