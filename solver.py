@@ -7,7 +7,7 @@ import random
 #g2 - L,R,F2,B2,U2,D2
 #g3 - L2,R2,F2,B2,U2,D2
 G0_MOVES = Rubik.h2m_moves
-G1_MOVES = [Rubik.L, Rubik.R, Rubik.F, Rubik.B, Rubik.perm_apply(Rubik.U, Rubik.U), Rubik.perm_apply(Rubik.D, Rubik.D)]
+G1_MOVES = [Rubik.L, Rubik.Li, Rubik.R, Rubik.Ri, Rubik.F, Rubik.Fi, Rubik.B, Rubik.Bi, Rubik.U2, Rubik.D2]
 G2_MOVES = [Rubik.L, Rubik.R, Rubik.perm_apply(Rubik.F, Rubik.F), Rubik.perm_apply(Rubik.B, Rubik.B),
             Rubik.perm_apply(Rubik.U, Rubik.U), Rubik.perm_apply(Rubik.D, Rubik.D)]
 G3_MOVES = [Rubik.perm_apply(Rubik.L, Rubik.L), Rubik.perm_apply(Rubik.R, Rubik.R), Rubik.perm_apply(Rubik.F, Rubik.F),
@@ -51,18 +51,20 @@ def prettify_cube_list(cube_list):
 # if we verify the sequence is canonical every time a new move is added to it, we're only concerned about the last 2 moves
 def is_canonical(moves):
     prev = moves[-2]
+    prev_string = Rubik.perm_to_string_dict_htm[prev]
     last = moves[-1]
+    last_string = Rubik.perm_to_string_dict_htm[last]
 
-    if prev == last:
+    if prev_string[0] == last_string[0]:
         return False
 
-    if prev == Rubik.D and last == Rubik.U:
+    if prev_string[0] == 'D' and last_string == 'U':
         return False
 
-    if prev == Rubik.B and last == Rubik.F:
+    if prev_string == 'B' and last_string == 'F':
         return False
 
-    if prev == Rubik.R and last == Rubik.L:
+    if prev_string == 'R' and last_string == 'L':
         return False
 
     return True
@@ -77,10 +79,11 @@ def cube_bfs(start, condition_function, valid_moves):
     while visited:
         next_cube = visited.popleft()
         if max_depth > 1:
-            print(prettify_cube_list(next_cube[1]))
+            None
+            #print("list", prettify_cube_list(next_cube[1]))
         for m in valid_moves:
             moves = next_cube[1] + [m]
-            if len(moves) > 2:
+            if len(moves) > 1:
                 if not is_canonical(moves):
                     continue
             if len(moves) > max_depth:
@@ -89,9 +92,9 @@ def cube_bfs(start, condition_function, valid_moves):
             if condition_function(new_cube):
                 return moves
             visited.append((new_cube, moves))
-        #if max_depth > 5:
-         #   break
-    print([prettify_cube_list(v[1]) for v in visited])
+        if max_depth > 14:
+            break
+    #print([prettify_cube_list(v[1]) for v in visited])
     return None
 
 
@@ -104,11 +107,14 @@ if __name__ == "__main__":
     scramble = [Rubik.F, Rubik.R, Rubik.Bi, Rubik.perm_apply(Rubik.U, Rubik.U), Rubik.L, Rubik.F]
     #scramble = [Rubik.F, Rubik.R, Rubik.Bi]
     scrambled = Rubik.multiple_perm_apply(scramble, Rubik.I)
+    solve = [Rubik.Fi, Rubik.Li, Rubik.U2, Rubik.B, Rubik.Ri, Rubik.Fi]
+    print("solved", Rubik.multiple_perm_apply(solve, scrambled))
 
     print(check_complete_g2(scrambled))
-    g1_sol = cube_bfs(scrambled, Rubik.check_edge_orientation, G0_MOVES)
-    print(prettify_cube_list(g1_sol))
-    scrambled = Rubik.generate_cube()
+    g1_sol = cube_bfs(scrambled, check_complete_g1, G0_MOVES)
+    print("g1_sol", prettify_cube_list(g1_sol))
+    #scrambled = Rubik.generate_cube()
+    #solution = cube_bfs(scrambled, check_complete_g2, G1_MOVES)
     solution = cube_bfs(Rubik.multiple_perm_apply(g1_sol, scrambled), check_complete_g2, G1_MOVES)
     print(solution)
     #print(prettify_cube_list(solution))
