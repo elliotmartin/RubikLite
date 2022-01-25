@@ -140,28 +140,35 @@ I = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr ,bul ,ulb, lbu, 
 F = (fdl, dlf, lfd, flu, luf, ufl, frd, rdf, dfr, fur, urf, rfu, bul, ulb, lbu, bru, rub, ubr, bld, ldb, dbl, bdr, drb,
      rbd, fl, lf, fu, uf, fd, df, fr, rf, br, rb, bl, lb, bd, db, bu, ub, ur, ru, ul, lu, dr, rd, dl, ld)
 Fi = perm_inverse(F)
+F2 = perm_apply(F, F)
 
 B = (flu, luf, ufl, fur, urf, rfu, fdl, dlf, lfd, frd, rdf, dfr, bru, rub, ubr, bdr, drb, rbd, bul, ulb, lbu, bld, ldb,
      dbl, fu, uf, fr, rf, fl, lf, fd, df, bd, db, bu, ub, bl, lb, br, rb, ur, ru, ul, lu, dr, rd, dl, ld)
 Bi = perm_inverse(B)
+B2 = perm_apply(B, B)
 
 U = (rfu, fur, urf, rub, ubr, bru, fdl, dlf, lfd, frd, rdf, dfr, luf, ufl, flu, lbu, bul, ulb, bld, ldb, dbl, bdr, drb,
      rbd, ru, ur, fr, rf, fl, lf, fd, df, br, rb, bl, lb, bd, db, lu, ul, ub, bu, uf, fu, dr, rd, dl, ld)
 Ui = perm_inverse(U)
+U2 = perm_apply(U, U)
 
 D = (flu, luf, ufl, fur, urf, rfu, ldb, dbl, bld, lfd, fdl, dlf, bul, ulb, lbu, bru, rub, ubr, rbd, bdr, drb, rdf, dfr,
      frd, fu, uf, fr, rf, fl, lf, ld, dl, br, rb, bl, lb, rd, dr, bu, ub, ur, ru, ul, lu, df, fd, db, bd)
 Di = perm_inverse(D)
+D2 = perm_apply(D, D)
 
 R =  (flu, luf, ufl, dfr, frd, rdf, fdl, dlf, lfd, drb, rbd, bdr, bul, ulb, lbu, urf, rfu, fur, bld, ldb, dbl, ubr, bru,
       rub, fu, uf, dr, rd, fl, lf, fd, df, ur, ru, bl, lb, bd, db, bu, ub, fr, rf, ul, lu, br, rb, dl, ld)
 Ri = perm_inverse(R)
+R2 = perm_apply(R, R)
 
 L = (ulb, lbu, bul, fur, urf, rfu, ufl, flu, luf, frd, rdf, dfr, dbl, bld, ldb, bru, rub, ubr, dlf, lfd, fdl, bdr, drb,
      rbd, fu, uf, fr, rf, ul, lu, fd, df, br, rb, dl, ld, bd, db, bu, ub, ur, ru, bl, lb, dr, rd, fl, lf)
 Li = perm_inverse(L)
+L2 = perm_apply(L, L)
 
 moves = [F, Fi, U, Ui, R, Ri, B, Bi, D, Di, L, Li]
+h2m_moves = [F, Fi, F2, U, Ui, U2, R, Ri, R2, B, Bi, B2, D, Di, D2, L, Li, L2]
 quarter_twists = moves
 forward_moves = [F, U, R, B, D, L]
 
