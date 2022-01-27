@@ -13,9 +13,6 @@ G2_MOVES = [Rubik.L, Rubik.R, Rubik.perm_apply(Rubik.F, Rubik.F), Rubik.perm_app
 G3_MOVES = [Rubik.perm_apply(Rubik.L, Rubik.L), Rubik.perm_apply(Rubik.R, Rubik.R), Rubik.perm_apply(Rubik.F, Rubik.F),
             Rubik.perm_apply(Rubik.B, Rubik.B), Rubik.perm_apply(Rubik.U, Rubik.U), Rubik.perm_apply(Rubik.D, Rubik.D)]
 
-U2 = Rubik.perm_apply(Rubik.U, Rubik.U)
-print(Rubik.perm_apply(U2, U2))
-
 
 def check_complete_g1(cube):
     return Rubik.check_edge_orientation(cube)
@@ -70,7 +67,6 @@ def is_canonical(moves):
     return True
 
 
-# need to implement canonical sequences to make bfs more efficient. Currently it gets stuck processing a lot of move*4
 def cube_bfs(start, condition_function, valid_moves):
     print("start bfs")
     max_depth = 0
@@ -92,7 +88,7 @@ def cube_bfs(start, condition_function, valid_moves):
             if condition_function(new_cube):
                 return moves
             visited.append((new_cube, moves))
-        if max_depth > 14:
+        if max_depth >= 14:
             break
     #print([prettify_cube_list(v[1]) for v in visited])
     return None
@@ -105,17 +101,19 @@ def stage_one(cube):
 if __name__ == "__main__":
     # TODO: Turn these into tests
     scramble = [Rubik.F, Rubik.R, Rubik.Bi, Rubik.perm_apply(Rubik.U, Rubik.U), Rubik.L, Rubik.F]
+    #print(prettify_cube_list(scramble))
     #scramble = [Rubik.F, Rubik.R, Rubik.Bi]
     scrambled = Rubik.multiple_perm_apply(scramble, Rubik.I)
     solve = [Rubik.Fi, Rubik.Li, Rubik.U2, Rubik.B, Rubik.Ri, Rubik.Fi]
     print("solved", Rubik.multiple_perm_apply(solve, scrambled))
 
-    print(check_complete_g2(scrambled))
+    #print(check_complete_g2(scrambled))
+    scrambled = Rubik.generate_cube()
+    print("scrambled", scrambled)
     g1_sol = cube_bfs(scrambled, check_complete_g1, G0_MOVES)
     print("g1_sol", prettify_cube_list(g1_sol))
-    #scrambled = Rubik.generate_cube()
     #solution = cube_bfs(scrambled, check_complete_g2, G1_MOVES)
     solution = cube_bfs(Rubik.multiple_perm_apply(g1_sol, scrambled), check_complete_g2, G1_MOVES)
     print(solution)
-    #print(prettify_cube_list(solution))
+    print("g2_sol", prettify_cube_list(solution))
 
